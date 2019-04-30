@@ -17,10 +17,15 @@ end
 class CheckCommit
   def check(commit_file)
     puts "Checking Commit Message in (#{commit_file})"
-    ExitCodes.success
+    if File.readlines(commit_file).grep(/\-\d\-/).any?
+      return ExitCodes.success
+    end
+    ExitCodes.fail
   end
 end
 
 
-check = CheckCommit.new
-check.check(file_arg)
+if file_arg
+  check = CheckCommit.new
+  check.check(file_arg)
+end
