@@ -1,7 +1,17 @@
 #!/usr/bin/env ruby
 
+file_arg = ARGV[0]
+# current_user = ENV['USER']
 
-$temp_commit = ARGV[0]
-$user    = ENV['USER']
 
-puts "Checking Commit Message in (#{$temp_commit})"
+class CheckCommit
+  def check(commit_file)
+    puts "Checking Commit Message in (#{commit_file})"
+  end
+end
+
+
+check = CheckCommit.new
+check.check(file_arg)
+
+
