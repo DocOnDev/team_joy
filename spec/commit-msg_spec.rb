@@ -1,5 +1,5 @@
 require 'rspec'
-require './commit-msg'
+require './lib/commit-msg'
 
 class CaptureOutput
   def self.capture_stdout(&block)
