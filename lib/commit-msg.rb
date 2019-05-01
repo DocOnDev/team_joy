@@ -18,11 +18,9 @@ class CheckCommit
   def check(commit_file)
     puts "Checking Commit Message in (#{commit_file})"
     content = File.readlines commit_file
-    if content.grep(/\-\d\-/).any?
-      value = get_numerical_response(content)
-      value ||= 99
-      return ExitCodes.success if value.between?(0, 5)
-    end
+    puts content
+    return ExitCodes.success unless content.grep(/\-[0-5]\-/).none?
+    puts "FAILED"
     ExitCodes.fail
   end
 
