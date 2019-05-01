@@ -17,10 +17,18 @@ end
 class CheckCommit
   def check(commit_file)
     puts "Checking Commit Message in (#{commit_file})"
-    if File.readlines(commit_file).grep(/\-\d\-/).any?
-      return ExitCodes.success
+    content = File.readlines commit_file
+    if content.grep(/\-\d\-/).any?
+      value = get_numerical_response(content)
+      return ExitCodes.success if value.between?(0, 5)
     end
     ExitCodes.fail
+  end
+
+  private
+
+  def get_numerical_response(content)
+    content[0].match(/\-(.*?)\-/)[1].to_i
   end
 end
 
