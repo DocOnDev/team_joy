@@ -20,7 +20,7 @@ class CheckCommit
     content = File.readlines commit_file
     if content.grep(/\-\d\-/).any?
       value = get_numerical_response(content)
-      value |= 99
+      value ||= 99
       return ExitCodes.success if value.between?(0, 5)
     end
     ExitCodes.fail
