@@ -1,10 +1,16 @@
 # Team Joy
-Example of git hook for measuring team joy using code as proxy
+Example of git hooks for measuring team joy using code as proxy
 
-## To install this hook
-copy commit-msg.rb to .git/hooks/commit-msg in any repository where you want to use this local commit hook.
+## Install
+The commit-msg hook will reject commits that do not have a quality rating
 
-Make sure to drop the .rb off the end of the file name when placed in the hooks directory or git will not pick it up.
+The post-update hook will push the accepted commit to the developer view database
+
+Copy commit-msg.rb to .git/hooks/commit-msg in any repository where you want to use this local commit hook.
+
+Copy post-update.rb to .git/hooks/post-update in any repository where you want to use this local update hook.
+
+Make sure to drop the .rb off the end of the file names and ensure the files can be executed when placed in the hooks directory or git will not pick it up.
 
 ## Basic use
 Once installed, all commit messages must contain a quality rating bewtween 0 and 5 in the format of -n- where n is the rating.
@@ -33,4 +39,3 @@ This git hook can be ignored by using the `--no-verify` parameter.
 
 `git commit -m"US999999 -7- Added valid threshold check to controller" --no-verify` <br/>
 This commit message has a rating of 7, but the commit will be accepted because the no-verify flag will bypass the hook.
-
