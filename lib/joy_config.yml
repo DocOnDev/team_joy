@@ -1,0 +1,4 @@
+cms:
+  uri: https://api-us-east-1.graphcms.com/v2/ckvjz9zck625301z063hx5rlj/master
+  public: true
+  token: # Use token when public is false
