@@ -5,7 +5,7 @@ require 'yaml'
 
 GIT_LOG_COMMAND = 'git log -1 HEAD --format=format:"{\"id\":\"%H\",\"shortID\":\"%h\",\"authorName\":\"%an\",\"committerName\":\"%cn\",\"subject\":\"%s\",\"body\":\"%b\"}"'
 GIT_FILES_COMMAND = 'git diff --name-only HEAD~1'
-UPDATE_QUERY = "{ commits { commitMessage score repoCommitShortId authors { name email } repository { name uri } repoCommitId files { name: location } } } "
+QUERY = "{ commits { commitMessage score repoCommitShortId authors { name email } repository { name uri } repoCommitId files { name: location } } } "
 
 @config = YAML.load_file('./joy_config.yml')
 
@@ -37,7 +37,7 @@ uri = URI.parse(@config['cms']['uri'])
 @request = Net::HTTP::Post.new(uri)
 @request["Accept"] = "application/json"
 @request["Authorization"] = "Bearer " + @config['cms']['token'] unless @config['cms']['public']
-@request.body = JSON.dump({"query" => UPDATE_QUERY})
+@request.body = JSON.dump({"query" => QUERY})
 
 req_options = { use_ssl: uri.scheme == "https", }
 
