@@ -42,6 +42,10 @@ describe 'Git Information' do
     expect(git_info.subject).not_to be_nil
   end
 
+  it 'should have a body' do
+    expect(git_info.body).not_to be_nil
+  end
+
   it 'should have a valid git location' do
     expect(git_info.git_location).to match(/.*team_joy.git/)
   end

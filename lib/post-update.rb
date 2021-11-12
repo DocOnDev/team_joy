@@ -33,7 +33,11 @@ class GitCommit
   end
 
   def subject
-    @committer_email ||= log_details["subject"]
+    @subject ||= log_details["subject"]
+  end
+
+  def body
+    @body ||= log_details["body"]
   end
 
   def branch_name
