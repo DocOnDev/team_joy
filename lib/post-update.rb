@@ -12,6 +12,10 @@ class GitCommit
   GIT_CURRENT_BRANCH_COMMAND = 'git branch --show-current'
   GIT_BRANCH_HASH_COMMAND_STUB = "git rev-parse %s"
 
+  def commit_hash
+    @commit_hash ||= log_details["id"]
+  end
+
   def branch_name
     @git_branch ||= run_command(GIT_CURRENT_BRANCH_COMMAND)
   end
@@ -29,7 +33,14 @@ class GitCommit
   end
 
   def log_details
-    @log_details ||= run_command(GIT_LOG_COMMAND)
+    unless @log_details
+      details ||= run_command(GIT_LOG_COMMAND)
+      json = JSON.parse(encode_returns(details))
+      git_files_array = multi_line_to_array(commit_files)
+      json.store("files", git_files_array)
+      @log_details = format_for_query(json)
+    end
+    @log_details
   end
 
   def commit_files
@@ -65,23 +76,11 @@ def format_for_query(hash)
 end
 
 gitCommit = GitCommit.new
-puts gitCommit.branch_name
-puts gitCommit.log_details
 
 
-encoded_details = encode_returns(gitCommit.log_details)
-details_json = JSON.parse(encoded_details)
+puts "Query Data: #{gitCommit.log_details}"
 
-git_files_array = multi_line_to_array(gitCommit.commit_files)
-
-details_json.store("files", git_files_array)
-
-# {"id"=>"d45d0ba71f7d6aa0d031c691926f5a2060536bd4", "shortID"=>"d45d0ba", "authorName"=>"Doc Norton", "committerName"=>"Doc Norton", "subject"=>"-2- Reconciling lack of commit rating from merge", "body"=>"", "files"=>["lib/commit-msg.py", "lib/commit-msg.py.windows"]}
-
-query_data = format_for_query(details_json)
-puts "Query Data: #{query_data}"
-
-QUERY = "mutation { createCommit ( data: #{query_data} ) }"
+QUERY = "mutation { createCommit ( data: #{gitCommit.log_details} ) }"
 
 # mutation makeCommit ($authorEmail: String!, $commitId: String!) {
 #   upsertAuthor (
