@@ -32,6 +32,10 @@ class GitCommit
     @committer_email ||= log_details["committerEmail"]
   end
 
+  def subject
+    @committer_email ||= log_details["subject"]
+  end
+
   def branch_name
     @git_branch ||= run_command(GIT_CURRENT_BRANCH_COMMAND)
   end
