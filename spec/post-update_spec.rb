@@ -25,6 +25,11 @@ describe 'Git Information' do
     expect(git_info.author_name).not_to be_nil
   end
 
+  it 'should have an committer_name' do
+    expect(git_info.committer_name).not_to be_nil
+    expect(git_info.committer_name).to eq(git_info.author_name)
+  end
+
   it 'should have a valid git location' do
     expect(git_info.git_location).to match(/.*team_joy.git/)
   end

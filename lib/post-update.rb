@@ -24,6 +24,10 @@ class GitCommit
     @author_name ||= log_details["authorName"]
   end
 
+  def committer_name
+    @committer_name ||= log_details["committerName"]
+  end
+
   def branch_name
     @git_branch ||= run_command(GIT_CURRENT_BRANCH_COMMAND)
   end
