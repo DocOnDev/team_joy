@@ -8,6 +8,11 @@ describe 'Git Information' do
     expect(git_info.commit_hash).not_to be_nil
   end
 
+  it 'should have a short commit hash' do
+    expect(git_info.short_commit_hash).not_to be_nil
+    expect(git_info.commit_hash).to include(git_info.short_commit_hash)
+  end
+
   it 'should have a branch name' do
     expect(git_info.branch_name).not_to be_nil
   end

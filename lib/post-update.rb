@@ -7,13 +7,17 @@ require 'yaml'
 
 class GitCommit
   GIT_URI_COMMAND = "git config --get remote.origin.url"
-  GIT_LOG_COMMAND = 'git log -1 HEAD --format=format:"{\"id\":\"%H\",\"shortID\":\"%h\",\"authorName\":\"%an\",\"committerName\":\"%cn\",\"committerEmail\":\"%ce\",\"subject\":\"%s\",\"body\":\"%b\"}"'
+  GIT_LOG_COMMAND = 'git log -1 HEAD --format=format:"{\"id\":\"%H\",\"shortId\":\"%h\",\"authorName\":\"%an\",\"committerName\":\"%cn\",\"committerEmail\":\"%ce\",\"subject\":\"%s\",\"body\":\"%b\"}"'
   GIT_FILES_COMMAND = 'git diff --name-only HEAD~1'
   GIT_CURRENT_BRANCH_COMMAND = 'git branch --show-current'
   GIT_BRANCH_HASH_COMMAND_STUB = "git rev-parse %s"
 
   def commit_hash
     @commit_hash ||= log_details["id"]
+  end
+
+  def short_commit_hash
+    @commit_hash ||= log_details["shortId"]
   end
 
   def branch_name
