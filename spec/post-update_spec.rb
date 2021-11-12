@@ -21,13 +21,21 @@ describe 'Git Information' do
     expect(git_info.branch_hash).not_to be_nil
   end
 
-  it 'should have an author_name' do
+  it 'should have an author name' do
     expect(git_info.author_name).not_to be_nil
   end
 
-  it 'should have an committer_name' do
+  it 'should have an committer name' do
     expect(git_info.committer_name).not_to be_nil
     expect(git_info.committer_name).to eq(git_info.author_name)
+  end
+
+  it 'should have an committer email' do
+    expect(git_info.committer_email).not_to be_nil
+  end
+
+  it 'should have a committer email that matches a basic email pattern' do
+    expect(git_info.committer_email).to match(/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/)
   end
 
   it 'should have a valid git location' do
