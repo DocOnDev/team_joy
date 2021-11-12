@@ -3,7 +3,8 @@ require 'uri'
 require 'json'
 require 'yaml'
 
-@config = YAML.load_file('./joy_config.yml')
+joy_config = File.dirname(File.expand_path(__FILE__)) + '/joy_config.yml'
+@config = YAML.load_file(joy_config)
 
 class GitInfo
   GIT_URI_COMMAND = "git config --get remote.origin.url"
