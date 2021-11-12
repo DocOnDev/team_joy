@@ -3,8 +3,7 @@ require 'uri'
 require 'json'
 require 'yaml'
 
-joy_config = File.dirname(File.expand_path(__FILE__)) + '/joy_config.yml'
-@config = YAML.load_file(joy_config)
+@config = YAML.load_file(File.dirname(File.expand_path(__FILE__)) + '/joy_config.yml')
 
 class GitInfo
   GIT_URI_COMMAND = "git config --get remote.origin.url"
@@ -21,8 +20,12 @@ class GitInfo
     @git_branch_hash ||= run_command(GIT_BRANCH_HASH_COMMAND_STUB % branch_name)
   end
 
+  def git_location
+    @git_location ||= run_command(GIT_URI_COMMAND)
+  end
+
   def https_location
-      @git_location ||= run_command(GIT_URI_COMMAND).gsub(/.*(\@|\/\/)(.*)(\:|\/)([^:\/]*)\/([^\/\.]*)\.git/, 'https://\2/\4/\5/')
+      @https_location ||= git_location.gsub(/.*(\@|\/\/)(.*)(\:|\/)([^:\/]*)\/([^\/\.]*)\.git/, 'https://\2/\4/\5/')
   end
 
   def log_details
@@ -41,7 +44,7 @@ end
 
 class CliRunner
   def self.run(command)
-    %x[#{command}]
+    %x[#{command}].chomp
   end
 end
 
