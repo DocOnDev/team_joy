@@ -26,21 +26,15 @@ def multi_line_to_array(input)
 end
 
 def git_branch
-  @git_branch = run_cli(GIT_CURRENT_BRANCH_COMMAND) unless @git_branch
-  @git_branch
+  @git_branch ||= run_cli(GIT_CURRENT_BRANCH_COMMAND)
 end
 
 def git_branch_hash
-  @git_branch_hash = run_cli(GIT_BRANCH_HASH_COMMAND_STUB % git_branch) unless @git_branch_hash
-  @git_branch_hash
+  @git_branch_hash ||= run_cli(GIT_BRANCH_HASH_COMMAND_STUB % git_branch)
 end
 
 def git_location
-  unless @git_location
-    @git_location = run_cli(GIT_URI_COMMAND) unless @git_location
-    @git_location = @git_location.gsub(/.*(\@|\/\/)(.*)(\:|\/)([^:\/]*)\/([^\/\.]*)\.git/, 'https://\2/\4/\5/')
-  end
-  @git_location
+    @git_location ||= run_cli(GIT_URI_COMMAND).gsub(/.*(\@|\/\/)(.*)(\:|\/)([^:\/]*)\/([^\/\.]*)\.git/, 'https://\2/\4/\5/')
 end
 
 def format_for_query(hash)
