@@ -3,19 +3,45 @@ require 'uri'
 require 'json'
 require 'yaml'
 
-GIT_URI_COMMAND = "git config --get remote.origin.url"
+class GitInfo
+  GIT_URI_COMMAND = "git config --get remote.origin.url"
+  GIT_LOG_COMMAND = 'git log -1 HEAD --format=format:"{\"id\":\"%H\",\"shortID\":\"%h\",\"authorName\":\"%an\",\"committerName\":\"%cn\",\"committerEmail\":\"%ce\",\"subject\":\"%s\",\"body\":\"%b\"}"'
+  GIT_FILES_COMMAND = 'git diff --name-only HEAD~1'
+  GIT_CURRENT_BRANCH_COMMAND = 'git branch --show-current'
+  GIT_BRANCH_HASH_COMMAND_STUB = "git rev-parse %s"
 
-GIT_LOG_COMMAND = 'git log -1 HEAD --format=format:"{\"id\":\"%H\",\"shortID\":\"%h\",\"authorName\":\"%an\",\"committerName\":\"%cn\",\"committerEmail\":\"%ce\",\"subject\":\"%s\",\"body\":\"%b\"}"'
-GIT_FILES_COMMAND = 'git diff --name-only HEAD~1'
+  def branch_name
+    @git_branch ||= run_command(GIT_CURRENT_BRANCH_COMMAND)
+  end
 
-GIT_CURRENT_BRANCH_COMMAND = 'git branch --show-current'
-GIT_BRANCH_HASH_COMMAND_STUB = "git rev-parse %s"
+  def branch_hash
+    @git_branch_hash ||= run_command(GIT_BRANCH_HASH_COMMAND_STUB % branch_name)
+  end
+
+  def https_location
+      @git_location ||= run_command(GIT_URI_COMMAND).gsub(/.*(\@|\/\/)(.*)(\:|\/)([^:\/]*)\/([^\/\.]*)\.git/, 'https://\2/\4/\5/')
+  end
+
+  def log_details
+    log_details ||= CliRunner.run(GIT_LOG_COMMAND)
+  end
+
+  def commit_files
+     CliRunner.run(GIT_FILES_COMMAND)
+  end
+
+  def run_command(command)
+    CliRunner.run(command)
+  end
+end
+
+class CliRunner
+  def self.run(command)
+    %x[#{command}]
+  end
+end
 
 @config = YAML.load_file('./joy_config.yml')
-
-def run_cli(command)
-  %x[#{command}]
-end
 
 def encode_returns(input)
   input.split("\n").join('\\n')
@@ -23,18 +49,6 @@ end
 
 def multi_line_to_array(input)
   input.split(/\n+|\r+/).reject(&:empty?)
-end
-
-def git_branch
-  @git_branch ||= run_cli(GIT_CURRENT_BRANCH_COMMAND)
-end
-
-def git_branch_hash
-  @git_branch_hash ||= run_cli(GIT_BRANCH_HASH_COMMAND_STUB % git_branch)
-end
-
-def git_location
-    @git_location ||= run_cli(GIT_URI_COMMAND).gsub(/.*(\@|\/\/)(.*)(\:|\/)([^:\/]*)\/([^\/\.]*)\.git/, 'https://\2/\4/\5/')
 end
 
 def format_for_query(hash)
@@ -45,12 +59,14 @@ def format_for_query(hash)
   result + "}"
 end
 
-git_details = run_cli(GIT_LOG_COMMAND)
-encoded_details = encode_returns(git_details)
+gitInfo = GitInfo.new
+puts gitInfo.branch_name
+
+
+encoded_details = encode_returns(gitInfo.log_details)
 details_json = JSON.parse(encoded_details)
 
-commit_files = run_cli(GIT_FILES_COMMAND)
-git_files_array = multi_line_to_array(commit_files)
+git_files_array = multi_line_to_array(gitInfo.commit_files)
 
 details_json.store("files", git_files_array)
 
