@@ -2,7 +2,7 @@ require 'rspec'
 require './lib/post-update'
 
 describe 'Git Information' do
-  let(:git_info){GitInfo.new}
+  let(:git_info){GitCommit.new}
 
   it 'should have a branch name' do
     expect(git_info.branch_name).not_to be_nil

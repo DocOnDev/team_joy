@@ -5,7 +5,7 @@ require 'yaml'
 
 @config = YAML.load_file(File.dirname(File.expand_path(__FILE__)) + '/joy_config.yml')
 
-class GitInfo
+class GitCommit
   GIT_URI_COMMAND = "git config --get remote.origin.url"
   GIT_LOG_COMMAND = 'git log -1 HEAD --format=format:"{\"id\":\"%H\",\"shortID\":\"%h\",\"authorName\":\"%an\",\"committerName\":\"%cn\",\"committerEmail\":\"%ce\",\"subject\":\"%s\",\"body\":\"%b\"}"'
   GIT_FILES_COMMAND = 'git diff --name-only HEAD~1'
@@ -64,15 +64,15 @@ def format_for_query(hash)
   result + "}"
 end
 
-gitInfo = GitInfo.new
-puts gitInfo.branch_name
-puts gitInfo.log_details
+gitCommit = GitCommit.new
+puts gitCommit.branch_name
+puts gitCommit.log_details
 
 
-encoded_details = encode_returns(gitInfo.log_details)
+encoded_details = encode_returns(gitCommit.log_details)
 details_json = JSON.parse(encoded_details)
 
-git_files_array = multi_line_to_array(gitInfo.commit_files)
+git_files_array = multi_line_to_array(gitCommit.commit_files)
 
 details_json.store("files", git_files_array)
 
