@@ -3,6 +3,8 @@ require 'uri'
 require 'json'
 require 'yaml'
 
+@config = YAML.load_file('./joy_config.yml')
+
 class GitInfo
   GIT_URI_COMMAND = "git config --get remote.origin.url"
   GIT_LOG_COMMAND = 'git log -1 HEAD --format=format:"{\"id\":\"%H\",\"shortID\":\"%h\",\"authorName\":\"%an\",\"committerName\":\"%cn\",\"committerEmail\":\"%ce\",\"subject\":\"%s\",\"body\":\"%b\"}"'
@@ -23,11 +25,11 @@ class GitInfo
   end
 
   def log_details
-    log_details ||= CliRunner.run(GIT_LOG_COMMAND)
+    log_details ||= run_command(GIT_LOG_COMMAND)
   end
 
   def commit_files
-     CliRunner.run(GIT_FILES_COMMAND)
+     run_command(GIT_FILES_COMMAND)
   end
 
   def run_command(command)
@@ -40,8 +42,6 @@ class CliRunner
     %x[#{command}]
   end
 end
-
-@config = YAML.load_file('./joy_config.yml')
 
 def encode_returns(input)
   input.split("\n").join('\\n')
