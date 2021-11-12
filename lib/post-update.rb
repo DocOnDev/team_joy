@@ -17,7 +17,11 @@ class GitCommit
   end
 
   def short_commit_hash
-    @commit_hash ||= log_details["shortId"]
+    @short_commit_hash ||= log_details["shortId"]
+  end
+
+  def author_name
+    @author_name ||= log_details["authorName"]
   end
 
   def branch_name
@@ -39,16 +43,14 @@ class GitCommit
   def log_details
     unless @log_details
       details ||= run_command(GIT_LOG_COMMAND)
-      json = JSON.parse(encode_returns(details))
-      git_files_array = multi_line_to_array(commit_files)
-      json.store("files", git_files_array)
-      @log_details = format_for_query(json)
+      @log_details = JSON.parse(encode_returns(details))
+      @log_details.store("files", commit_files)
     end
     @log_details
   end
 
   def commit_files
-     run_command(GIT_FILES_COMMAND)
+     @commit_files ||= multi_line_to_array(run_command(GIT_FILES_COMMAND))
   end
 
   private

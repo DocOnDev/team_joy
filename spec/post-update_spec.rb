@@ -21,6 +21,10 @@ describe 'Git Information' do
     expect(git_info.branch_hash).not_to be_nil
   end
 
+  it 'should have an author_name' do
+    expect(git_info.author_name).not_to be_nil
+  end
+
   it 'should have a valid git location' do
     expect(git_info.git_location).to match(/.*team_joy.git/)
   end
