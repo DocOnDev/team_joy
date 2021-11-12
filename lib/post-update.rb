@@ -25,13 +25,14 @@ class GitInfo
   end
 
   def log_details
-    log_details ||= run_command(GIT_LOG_COMMAND)
+    @log_details ||= run_command(GIT_LOG_COMMAND)
   end
 
   def commit_files
      run_command(GIT_FILES_COMMAND)
   end
 
+  private
   def run_command(command)
     CliRunner.run(command)
   end
@@ -61,6 +62,7 @@ end
 
 gitInfo = GitInfo.new
 puts gitInfo.branch_name
+puts gitInfo.log_details
 
 
 encoded_details = encode_returns(gitInfo.log_details)
