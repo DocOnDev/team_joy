@@ -60,6 +60,11 @@ class GitCommit
       @https_location ||= git_location.gsub(/.*(\@|\/\/)(.*)(\:|\/)([^:\/]*)\/([^\/\.]*)\.git/, 'https://\2/\4/\5/')
   end
 
+  def commit_files
+     @commit_files ||= multi_line_to_array(run_command(GIT_FILES_COMMAND))
+  end
+
+  private
   def log_details
     unless @log_details
       details ||= run_command(GIT_LOG_COMMAND)
@@ -69,11 +74,6 @@ class GitCommit
     @log_details
   end
 
-  def commit_files
-     @commit_files ||= multi_line_to_array(run_command(GIT_FILES_COMMAND))
-  end
-
-  private
   def run_command(command)
     CliRunner.run(command)
   end
@@ -104,9 +104,10 @@ end
 gitCommit = GitCommit.new
 
 
-puts "Query Data: #{gitCommit.log_details}"
+# puts "Query Data: #{gitCommit.log_details}"
+#
+# QUERY = "mutation { createCommit ( data: #{gitCommit.log_details} ) }"
 
-QUERY = "mutation { createCommit ( data: #{gitCommit.log_details} ) }"
 
 # mutation makeCommit ($authorEmail: String!, $commitId: String!) {
 #   upsertAuthor (
@@ -165,7 +166,9 @@ QUERY = "mutation { createCommit ( data: #{gitCommit.log_details} ) }"
 #   }
 # }
 
-puts "QUERY: #{QUERY}"
+
+
+# puts "QUERY: #{QUERY}"
 
 
 
@@ -174,7 +177,7 @@ uri = URI.parse(@config['cms']['uri'])
 @request = Net::HTTP::Post.new(uri)
 @request["Accept"] = "application/json"
 @request["Authorization"] = "Bearer " + @config['cms']['token'] unless @config['cms']['public']
-@request.body = JSON.dump({"query" => QUERY})
+@request.body = JSON.dump({"query" => "QUERY"})
 
 req_options = { use_ssl: uri.scheme == "https", }
 
