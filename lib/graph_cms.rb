@@ -15,6 +15,9 @@ class GraphCMS
         repository: {
           connect: { uri: "' + @git_commit.https_location + '"}
         }
+        authors: {
+          connect: { email: "' + @git_commit.committer_email + '" }
+        }
 
       }) { id }
         publishCommit(where: {repoCommitId: "' + @git_commit.commit_hash + '"} to: PUBLISHED) { id }

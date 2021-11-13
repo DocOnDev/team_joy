@@ -5,6 +5,7 @@ require './lib/graph_cms'
 mock_commit_hash = "Stubbed Commit Hash " + rand(10..1000).to_s
 mock_commit_message = "Running Specs"
 mock_repo_location = "git@github.com:DocOnDev/team_joy.git"
+mock_committer_email = "test@docondev.com"
 
 describe 'GraphCMS' do
   let(:git_dbl){double(GitCommit)}
@@ -14,6 +15,7 @@ describe 'GraphCMS' do
     allow(git_dbl).to receive(:score).and_return(3)
     allow(git_dbl).to receive(:subject).and_return(mock_commit_message)
     allow(git_dbl).to receive(:https_location).and_return(mock_repo_location)
+    allow(git_dbl).to receive(:committer_email).and_return(mock_committer_email)
     @graph_cms = GraphCMS.new(git_dbl)
   end
 
@@ -49,6 +51,10 @@ describe 'GraphCMS' do
 
       it 'should have a repo' do
         expect(@graph_cms.query).to include "uri: \"#{mock_repo_location}"
+      end
+
+      it 'should have an author' do
+        expect(@graph_cms.query).to include "email: \"#{mock_committer_email}"
       end
 
       it 'should have a subject' do
