@@ -6,15 +6,7 @@ require File.dirname(File.expand_path(__FILE__)) + '/git_commit'
 
 @config = YAML.load_file(File.dirname(File.expand_path(__FILE__)) + '/joy_config.yml')
 
-
-
 gitCommit = GitCommit.new
-
-
-# puts "Query Data: #{gitCommit.log_details}"
-#
-# QUERY = "mutation { createCommit ( data: #{gitCommit.log_details} ) }"
-
 
 # mutation makeCommit ($authorEmail: String!, $commitId: String!) {
 #   upsertAuthor (
@@ -74,19 +66,14 @@ gitCommit = GitCommit.new
 # }
 
 
-
-# puts "QUERY: #{QUERY}"
-
-
-
 uri = URI.parse(@config['cms']['uri'])
 
 @request = Net::HTTP::Post.new(uri)
 @request["Accept"] = "application/json"
 @request["Authorization"] = "Bearer " + @config['cms']['token'] unless @config['cms']['public']
-@request.body = JSON.dump({"query" => "QUERY"})
-
 req_options = { use_ssl: uri.scheme == "https", }
+
+@request.body = JSON.dump({"query" => "QUERY"})
 
 response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
   http.request(@request)
