@@ -19,6 +19,15 @@ describe 'GraphCMS' do
       end
     end
 
+    context 'missing a score' do
+      it 'should default to 0' do
+        git_commit_dbl = double(GitCommit)
+        allow(git_commit_dbl).to receive(:score).and_return(nil)
+        graph_cms = GraphCMS.new(git_commit_dbl)
+        expect(graph_cms.query).to include "score: 0"
+      end
+    end
+
     context 'with a commit hash' do
       it 'should return a valid query' do
         git_commit_dbl = double(GitCommit)
