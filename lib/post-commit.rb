@@ -6,7 +6,9 @@ require 'json'
 require 'yaml'
 working_path = Dir.pwd
 require working_path + '/lib/git_commit'
+require working_path + '/lib/graph_cms'
 gitCommit = GitCommit.new
+graph_cms = GraphCMS.new(gitCommit)
 
 @config = YAML.load_file(working_path + '/lib/joy_config.yml')
 
@@ -76,21 +78,22 @@ committer_email = gitCommit.committer_email
 https_location = gitCommit.https_location
 branch_hash = gitCommit.branch_hash
 
-query = 'mutation makeCommit {
-  createCommit (data: {
-    commitMessage: "'+ subject +'"
-    score: 1
-    repoCommitId: "'+ commit_id +'"
-    repository: {
-        connect: { uri: "'+ https_location +'"}
-      }
-    authors: {
-      connect: { email: "'+ committer_email +'" }
-    }
-  }) { id }
-    publishCommit(where: {repoCommitId: "'+ commit_id +'"} to: PUBLISHED) { id }
-}
-'
+query = graph_cms.query
+# query = 'mutation makeCommit {
+#   createCommit (data: {
+#     commitMessage: "'+ subject +'"
+#     score: 1
+#     repoCommitId: "'+ commit_id +'"
+#     repository: {
+#         connect: { uri: "'+ https_location +'"}
+#       }
+#     authors: {
+#       connect: { email: "'+ committer_email +'" }
+#     }
+#   }) { id }
+#     publishCommit(where: {repoCommitId: "'+ commit_id +'"} to: PUBLISHED) { id }
+# }
+# '
 
 uri = URI.parse(@config['cms']['uri'])
 
