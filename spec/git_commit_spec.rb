@@ -1,13 +1,13 @@
 require 'rspec'
 require './lib/git_commit'
 
-MOCK_BRANCH_NAME = 'test_branch-234'
-MOCK_HASH = 'FAKE-HASH-453453455'
-MOCK_REPO_LOCATION = "git@github.com:DocOnDev/TEST_team_joy.git"
-MOCK_AUTHOR_NAME = "Doc Norton"
-MOCK_AUTHOR_EMAIL = "doc@docondev.com"
-MOCK_LOG_RESPONSE = '{"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"'+MOCK_AUTHOR_NAME+'","committerName":"'+MOCK_AUTHOR_NAME+'","committerEmail":"'+MOCK_AUTHOR_EMAIL+'","subject":"-3- Ran Specs Again","body":""}'
-MOCK_FILES_RESPONSE = "lib/git_commit.rb
+mock_branch_name = 'test_branch-234'
+mock_hash = 'FAKE-HASH-453453455'
+mock_repo_location = "git@github.com:DocOnDev/TEST_team_joy.git"
+mock_author_name = "Doc Norton"
+mock_author_email = "doc@docondev.com"
+mock_log_response = '{"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"'+mock_author_name+'","committerName":"'+mock_author_name+'","committerEmail":"'+mock_author_email+'","subject":"-3- Ran Specs Again","body":""}'
+mock_files_response = "lib/git_commit.rb
 lib/graph_cms.rb
 spec/git_commit_spec.rb
 "
@@ -18,11 +18,12 @@ describe 'Git Commit' do
   let(:cli_dbl){double(CliRunner)}
 
   before(:each) do
-    allow(cli_dbl).to receive(:run).with('git branch --show-current').and_return('test_branch-234')
-    allow(cli_dbl).to receive(:run).with('git branch --show-current').and_return(MOCK_BRANCH_NAME)
-    allow(cli_dbl).to receive(:run).with("git config --get remote.origin.url").and_return(MOCK_REPO_LOCATION)
-    allow(cli_dbl).to receive(:run).with(/git log -1 HEAD/).and_return(MOCK_LOG_RESPONSE)
-    allow(cli_dbl).to receive(:run).with("git diff --name-only HEAD~1").and_return(MOCK_FILES_RESPONSE)
+    allow(cli_dbl).to receive(:run).with('git branch --show-current').and_return(mock_branch_name)
+    allow(cli_dbl).to receive(:run).with("git config --get remote.origin.url").and_return(mock_repo_location)
+    allow(cli_dbl).to receive(:run).with(/git log -1 HEAD/).and_return(mock_log_response)
+    allow(cli_dbl).to receive(:run).with("git diff --name-only HEAD~1").and_return(mock_files_response)
+    allow(cli_dbl).to receive(:run).with("git rev-parse #{mock_branch_name}").and_return(mock_hash)
+
     commit.cli_runner = cli_dbl
   end
 
@@ -40,12 +41,11 @@ describe 'Git Commit' do
   end
 
   it 'should have a branch hash' do
-    allow(cli_dbl).to receive(:run).with("git rev-parse #{MOCK_BRANCH_NAME}").and_return(MOCK_HASH)
-    expect(commit.branch_hash).to eq(MOCK_HASH)
+    expect(commit.branch_hash).to eq(mock_hash)
   end
 
   it 'should have an author name' do
-    expect(commit.author_name).to eq(MOCK_AUTHOR_NAME)
+    expect(commit.author_name).to eq(mock_author_name)
   end
 
   it 'should have an committer name' do
@@ -54,7 +54,7 @@ describe 'Git Commit' do
   end
 
   it 'should have an committer email' do
-    expect(commit.committer_email).to eq(MOCK_AUTHOR_EMAIL)
+    expect(commit.committer_email).to eq(mock_author_email)
   end
 
   it 'should have a committer email that matches a basic email pattern' do
