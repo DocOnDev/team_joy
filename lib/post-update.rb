@@ -60,6 +60,14 @@ class GitCommit
   end
 
   private
+  def encode_returns(input)
+    input.split("\n").join('\\n')
+  end
+
+  def multi_line_to_array(input)
+    input.split(/\n+|\r+/).reject(&:empty?)
+  end
+
   def log_details
     unless @log_details
       details ||= run_command('git log -1 HEAD --format=format:"{\"id\":\"%H\",\"shortId\":\"%h\",\"authorName\":\"%an\",\"committerName\":\"%cn\",\"committerEmail\":\"%ce\",\"subject\":\"%s\",\"body\":\"%b\"}"')
@@ -78,22 +86,6 @@ class CliRunner
   def self.run(command)
     %x[#{command}].chomp
   end
-end
-
-def encode_returns(input)
-  input.split("\n").join('\\n')
-end
-
-def multi_line_to_array(input)
-  input.split(/\n+|\r+/).reject(&:empty?)
-end
-
-def format_for_query(hash)
-  result = "{"
-  hash.each do |key, value|
-    result += "#{key}: \"#{value}\", "
-  end
-  result + "}"
 end
 
 gitCommit = GitCommit.new
