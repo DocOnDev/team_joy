@@ -34,13 +34,11 @@ describe 'GraphCMS' do
       end
     end
 
-    context 'with a score' do
+    context 'with a good commit' do
       it 'should show the score' do
         expect(@graph_cms.query).to include "score: 3"
       end
-    end
 
-    context 'with a commit hash' do
       it 'should return a valid query' do
         expect(@graph_cms.query).to include "repoCommitId: \"#{MOCK_COMMIT_HASH}"
       end
