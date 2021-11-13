@@ -4,11 +4,11 @@ require 'net/http'
 require 'uri'
 require 'json'
 require 'yaml'
-require Dir.pwd + '/lib/git_commit'
-
-@config = YAML.load_file(Dir.pwd + '/lib/joy_config.yml')
-
+working_path = Dir.pwd
+require working_path + '/lib/git_commit'
 gitCommit = GitCommit.new
+
+@config = YAML.load_file(working_path + '/lib/joy_config.yml')
 
 # mutation makeCommit ($authorEmail: String!, $commitId: String!) {
 #   upsertAuthor (
@@ -91,8 +91,6 @@ query = 'mutation makeCommit {
     publishCommit(where: {repoCommitId: "'+ commit_id +'"} to: PUBLISHED) { id }
 }
 '
-
-#Made hook executable
 
 uri = URI.parse(@config['cms']['uri'])
 

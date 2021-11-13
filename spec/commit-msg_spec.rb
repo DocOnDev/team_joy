@@ -16,24 +16,30 @@ describe 'Commit Message Handler' do
   end
 
 
-  it 'should succeed when file content does contain commit pattern' do
-    status = @checker.check @file_name
-    expect(status).to eq(ExitCodes.success)
+  context 'file content does contain commit pattern' do
+    it 'should succeed' do
+      status = @checker.check @file_name
+      expect(status).to eq(ExitCodes.success)
+    end
   end
 
-  it 'should fail when file content does NOT contain commit pattern' do
-    file_name = SpecUtils::Resource.file("FailingMissing.txt")
-    content = File.readlines file_name
+  context 'file content does NOT contain commit pattern' do
+    it 'should fail' do
+      file_name = SpecUtils::Resource.file("FailingMissing.txt")
+      content = File.readlines file_name
 
-    expect do
-      output = SpecUtils::Capture.stdout { @checker.check file_name }
-      expect(output).to include "Commit rejected: Message #{content} does not contain a rating between 0 and 5."
-    end.to raise_error(SystemExit)
+      expect do
+        output = SpecUtils::Capture.stdout { @checker.check file_name }
+        expect(output).to include "Commit rejected: Message #{content} does not contain a rating between 0 and 5."
+      end.to raise_error(SystemExit)
+    end
   end
 
-  it 'should fail when file content contains pattern with value over 5' do
-    file_name = SpecUtils::Resource.file("FailingWith6.txt")
-    expect { @checker.check file_name }.to raise_error(SystemExit)
+  context 'file content contains pattern with value over 5' do
+    it 'should fail' do
+      file_name = SpecUtils::Resource.file("FailingWith6.txt")
+      expect { @checker.check file_name }.to raise_error(SystemExit)
+    end
   end
 
 end
