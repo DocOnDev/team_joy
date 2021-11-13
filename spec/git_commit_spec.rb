@@ -1,9 +1,22 @@
 require 'rspec'
 require './lib/git_commit'
 
+MOCK_BRANCH_NAME = 'test_branch-234'
+MOCK_HASH = 'FAKE-HASH-453453455'
+MOCK_REPO_LOCATION = "git@github.com:DocOnDev/TEST_team_joy.git"
+MOCK_LOG_RESPONSE = {"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"Doc Norton","committerName":"Doc Norton","committerEmail":"doc@docondev.com","subject":"-1- Roll-back while working on GitCommit","body":""}
+
+
 describe 'Git Commit' do
   let(:commit){GitCommit.new}
   let(:cli_dbl){double(CliRunner)}
+
+  before(:each) do
+    allow(cli_dbl).to receive(:run).with('git branch --show-current').and_return('test_branch-234')
+    allow(cli_dbl).to receive(:run).with('git branch --show-current').and_return(MOCK_BRANCH_NAME)
+    allow(cli_dbl).to receive(:run).with("git config --get remote.origin.url").and_return(MOCK_REPO_LOCATION)
+    allow(cli_dbl).to receive(:run).with(/git log -1 HEAD/).and_return(MOCK_LOG_RESPONSE)
+  end
 
   it 'should have a commit hash' do
     expect(commit.commit_hash).not_to be_nil
@@ -16,12 +29,13 @@ describe 'Git Commit' do
 
   it 'should have a branch name' do
     commit.cli_runner = cli_dbl
-    allow(cli_dbl).to receive(:run).with('git branch --show-current').and_return('test_branch-234')
     expect(commit.branch_name).to eq('test_branch-234')
   end
 
   it 'should have a branch hash' do
-    expect(commit.branch_hash).not_to be_nil
+    commit.cli_runner = cli_dbl
+    allow(cli_dbl).to receive(:run).with("git rev-parse #{MOCK_BRANCH_NAME}").and_return(MOCK_HASH)
+    expect(commit.branch_hash).to eq(MOCK_HASH)
   end
 
   it 'should have an author name' do
@@ -54,11 +68,13 @@ describe 'Git Commit' do
   end
 
   it 'should have a valid git location' do
-    expect(commit.git_location).to match(/.*team_joy.git/)
+    commit.cli_runner = cli_dbl
+    expect(commit.git_location).to match(/.*TEST_team_joy.git/)
   end
 
   it 'should have a valid https location' do
-    expect(commit.https_location).to match(/https:\/\/.*team_joy/)
+    commit.cli_runner = cli_dbl
+    expect(commit.https_location).to match(/https:\/\/.*TEST_team_joy/)
   end
 
 end
