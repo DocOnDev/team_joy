@@ -10,11 +10,12 @@ class GraphCMS
     query_string = 'mutation {
       createCommit (data: {
         repoCommitId: "' + @git_commit.commit_hash + '"
-        score: ' + @git_commit.score || 0 + '
+        score: ' + (@git_commit.score || 0).to_s + '
       }) { id }
         publishCommit(where: {repoCommitId: "' + @git_commit.commit_hash + '"} to: PUBLISHED) { id }
     }
     '
+
 
   end
 end
