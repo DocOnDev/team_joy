@@ -6,11 +6,6 @@ require 'yaml'
 @config = YAML.load_file(File.dirname(File.expand_path(__FILE__)) + '/joy_config.yml')
 
 class GitCommit
-  GIT_URI_COMMAND = "git config --get remote.origin.url"
-  GIT_LOG_COMMAND = 'git log -1 HEAD --format=format:"{\"id\":\"%H\",\"shortId\":\"%h\",\"authorName\":\"%an\",\"committerName\":\"%cn\",\"committerEmail\":\"%ce\",\"subject\":\"%s\",\"body\":\"%b\"}"'
-  GIT_FILES_COMMAND = 'git diff --name-only HEAD~1'
-  GIT_CURRENT_BRANCH_COMMAND = 'git branch --show-current'
-  GIT_BRANCH_HASH_COMMAND_STUB = "git rev-parse %s"
 
   def commit_hash
     @commit_hash ||= log_details["id"]
@@ -45,15 +40,15 @@ class GitCommit
   end
 
   def branch_name
-    @git_branch ||= run_command(GIT_CURRENT_BRANCH_COMMAND)
+    @git_branch ||= run_command('git branch --show-current')
   end
 
   def branch_hash
-    @git_branch_hash ||= run_command(GIT_BRANCH_HASH_COMMAND_STUB % branch_name)
+    @git_branch_hash ||= run_command("git rev-parse %s" % branch_name)
   end
 
   def git_location
-    @git_location ||= run_command(GIT_URI_COMMAND)
+    @git_location ||= run_command("git config --get remote.origin.url")
   end
 
   def https_location
@@ -61,13 +56,13 @@ class GitCommit
   end
 
   def commit_files
-     @commit_files ||= multi_line_to_array(run_command(GIT_FILES_COMMAND))
+     @commit_files ||= multi_line_to_array(run_command('git diff --name-only HEAD~1'))
   end
 
   private
   def log_details
     unless @log_details
-      details ||= run_command(GIT_LOG_COMMAND)
+      details ||= run_command('git log -1 HEAD --format=format:"{\"id\":\"%H\",\"shortId\":\"%h\",\"authorName\":\"%an\",\"committerName\":\"%cn\",\"committerEmail\":\"%ce\",\"subject\":\"%s\",\"body\":\"%b\"}"')
       @log_details = JSON.parse(encode_returns(details))
       @log_details.store("files", commit_files)
     end
