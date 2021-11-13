@@ -65,31 +65,37 @@ gitCommit = GitCommit.new
 #   }
 # }
 
-commit_id = gitCommit.branch_hash # (123456789 + rand(10..1000)).to_s
-commit_message = "Starting with commit ID"
+
+# Random is to make each test unique - do not use in production
+# commit_id = gitCommit.branch_hash + rand(10..1000).to_s
+commit_id = gitCommit.branch_hash
+subject = gitCommit.subject
+committer_email = gitCommit.committer_email
+https_location = gitCommit.https_location
+branch_hash = gitCommit.branch_hash
+
+puts ""
+puts "***** LOCATION: #{https_location}"
 
 query = 'mutation makeCommit {
   createCommit (data: {
-    commitMessage: "%s"
+    commitMessage: "'+ subject +'"
     score: 1
-    repoCommitId: "%s"
+    repoCommitId: "'+ commit_id +'"
     repository: {
-        connect: { uri: "https://github.com/DocOnDev/team_joy"}
+        connect: { uri: "'+ https_location +'"}
       }
     authors: {
-      connect: { email: "test@docondev.com" }
-    }
-    branch: {
-      connect: {hash: "branch-hash"}
+      connect: { email: "'+ committer_email +'" }
     }
   }) {
     id
   }
-    publishCommit(where: {repoCommitId: "%s"} to: PUBLISHED) {
+    publishCommit(where: {repoCommitId: "'+ commit_id +'"} to: PUBLISHED) {
     id
   }
 }
-' % [commit_message, commit_id, commit_id]
+'
 
 
 uri = URI.parse(@config['cms']['uri'])
