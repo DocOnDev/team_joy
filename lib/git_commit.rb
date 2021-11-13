@@ -47,6 +47,10 @@ class GitCommit
       @https_location ||= git_location.gsub(/.*(\@|\/\/)(.*)(\:|\/)([^:\/]*)\/([^\/\.]*)\.git/, 'https://\2/\4/\5/')
   end
 
+  def score
+    @score ||= subject.scan(/-(\d)-/).first[0].to_i
+  end
+
   def commit_files
      @commit_files ||= multi_line_to_array(run_command('git diff --name-only HEAD~1'))
   end

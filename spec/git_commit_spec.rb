@@ -6,7 +6,7 @@ MOCK_HASH = 'FAKE-HASH-453453455'
 MOCK_REPO_LOCATION = "git@github.com:DocOnDev/TEST_team_joy.git"
 MOCK_AUTHOR_NAME = "Doc Norton"
 MOCK_AUTHOR_EMAIL = "doc@docondev.com"
-MOCK_LOG_RESPONSE = '{"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"'+MOCK_AUTHOR_NAME+'","committerName":"'+MOCK_AUTHOR_NAME+'","committerEmail":"'+MOCK_AUTHOR_EMAIL+'","subject":"-1- Roll-back while working on GitCommit","body":""}'
+MOCK_LOG_RESPONSE = '{"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"'+MOCK_AUTHOR_NAME+'","committerName":"'+MOCK_AUTHOR_NAME+'","committerEmail":"'+MOCK_AUTHOR_EMAIL+'","subject":"-3- Ran Specs Again","body":""}'
 MOCK_FILES_RESPONSE = "lib/git_commit.rb
 lib/graph_cms.rb
 spec/git_commit_spec.rb
@@ -24,7 +24,6 @@ describe 'Git Commit' do
     allow(cli_dbl).to receive(:run).with(/git log -1 HEAD/).and_return(MOCK_LOG_RESPONSE)
     allow(cli_dbl).to receive(:run).with("git diff --name-only HEAD~1").and_return(MOCK_FILES_RESPONSE)
     commit.cli_runner = cli_dbl
-
   end
 
   it 'should have a commit hash' do
@@ -80,6 +79,10 @@ describe 'Git Commit' do
 
   it 'should have a valid https location' do
     expect(commit.https_location).to match(/https:\/\/.*TEST_team_joy/)
+  end
+
+  it 'should have a score of 3' do
+    expect(commit.score).to eq(3)
   end
 
 end
