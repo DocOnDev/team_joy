@@ -70,7 +70,6 @@ graph_cms = GraphCMS.new(gitCommit)
 # }
 
 
-
 uri = URI.parse(@config['cms']['uri'])
 
 @request = Net::HTTP::Post.new(uri)
@@ -78,7 +77,7 @@ uri = URI.parse(@config['cms']['uri'])
 @request["Authorization"] = "Bearer " + @config['cms']['token'] unless @config['cms']['public']
 req_options = { use_ssl: uri.scheme == "https", }
 
-@request.body = JSON.dump({"query" => query})
+@request.body = JSON.dump({"query" => graph_cms.query})
 
 response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
   http.request(@request)
