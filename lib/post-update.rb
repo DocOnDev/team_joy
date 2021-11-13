@@ -90,6 +90,7 @@ query = 'mutation makeCommit {
 }
 '
 
+#Made hook executable
 
 uri = URI.parse(@config['cms']['uri'])
 
