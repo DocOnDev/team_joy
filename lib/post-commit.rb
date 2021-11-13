@@ -6,7 +6,7 @@ require 'json'
 require 'yaml'
 require Dir.pwd + '/lib/git_commit'
 
-@config = YAML.load_file(File.dirname(File.expand_path(__FILE__)) + '/joy_config.yml')
+@config = YAML.load_file(Dir.pwd + '/lib/joy_config.yml')
 
 gitCommit = GitCommit.new
 
