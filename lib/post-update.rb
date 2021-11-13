@@ -94,7 +94,6 @@ query = 'mutation makeCommit {
 }
 '
 
-
 uri = URI.parse(@config['cms']['uri'])
 
 @request = Net::HTTP::Post.new(uri)
