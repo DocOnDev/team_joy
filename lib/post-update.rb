@@ -74,9 +74,6 @@ committer_email = gitCommit.committer_email
 https_location = gitCommit.https_location
 branch_hash = gitCommit.branch_hash
 
-puts ""
-puts "***** LOCATION: #{https_location}"
-
 query = 'mutation makeCommit {
   createCommit (data: {
     commitMessage: "'+ subject +'"
