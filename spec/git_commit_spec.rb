@@ -4,7 +4,13 @@ require './lib/git_commit'
 MOCK_BRANCH_NAME = 'test_branch-234'
 MOCK_HASH = 'FAKE-HASH-453453455'
 MOCK_REPO_LOCATION = "git@github.com:DocOnDev/TEST_team_joy.git"
-MOCK_LOG_RESPONSE = {"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"Doc Norton","committerName":"Doc Norton","committerEmail":"doc@docondev.com","subject":"-1- Roll-back while working on GitCommit","body":""}
+MOCK_AUTHOR_NAME = "Doc Norton"
+MOCK_AUTHOR_EMAIL = "doc@docondev.com"
+MOCK_LOG_RESPONSE = '{"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"'+MOCK_AUTHOR_NAME+'","committerName":"'+MOCK_AUTHOR_NAME+'","committerEmail":"'+MOCK_AUTHOR_EMAIL+'","subject":"-1- Roll-back while working on GitCommit","body":""}'
+MOCK_FILES_RESPONSE = "lib/git_commit.rb
+lib/graph_cms.rb
+spec/git_commit_spec.rb
+"
 
 
 describe 'Git Commit' do
@@ -16,6 +22,9 @@ describe 'Git Commit' do
     allow(cli_dbl).to receive(:run).with('git branch --show-current').and_return(MOCK_BRANCH_NAME)
     allow(cli_dbl).to receive(:run).with("git config --get remote.origin.url").and_return(MOCK_REPO_LOCATION)
     allow(cli_dbl).to receive(:run).with(/git log -1 HEAD/).and_return(MOCK_LOG_RESPONSE)
+    allow(cli_dbl).to receive(:run).with("git diff --name-only HEAD~1").and_return(MOCK_FILES_RESPONSE)
+    commit.cli_runner = cli_dbl
+
   end
 
   it 'should have a commit hash' do
@@ -28,18 +37,16 @@ describe 'Git Commit' do
   end
 
   it 'should have a branch name' do
-    commit.cli_runner = cli_dbl
     expect(commit.branch_name).to eq('test_branch-234')
   end
 
   it 'should have a branch hash' do
-    commit.cli_runner = cli_dbl
     allow(cli_dbl).to receive(:run).with("git rev-parse #{MOCK_BRANCH_NAME}").and_return(MOCK_HASH)
     expect(commit.branch_hash).to eq(MOCK_HASH)
   end
 
   it 'should have an author name' do
-    expect(commit.author_name).not_to be_nil
+    expect(commit.author_name).to eq(MOCK_AUTHOR_NAME)
   end
 
   it 'should have an committer name' do
@@ -48,7 +55,7 @@ describe 'Git Commit' do
   end
 
   it 'should have an committer email' do
-    expect(commit.committer_email).not_to be_nil
+    expect(commit.committer_email).to eq(MOCK_AUTHOR_EMAIL)
   end
 
   it 'should have a committer email that matches a basic email pattern' do
@@ -63,17 +70,15 @@ describe 'Git Commit' do
     expect(commit.body).not_to be_nil
   end
 
-  it 'should have at least one file' do
-    expect(commit.files.size).to be > 0
+  it 'should have 3 files' do
+    expect(commit.files.size).to eq(3)
   end
 
   it 'should have a valid git location' do
-    commit.cli_runner = cli_dbl
     expect(commit.git_location).to match(/.*TEST_team_joy.git/)
   end
 
   it 'should have a valid https location' do
-    commit.cli_runner = cli_dbl
     expect(commit.https_location).to match(/https:\/\/.*TEST_team_joy/)
   end
 
