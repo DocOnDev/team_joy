@@ -23,6 +23,5 @@ class GraphCMS
         publishCommit(where: {repoCommitId: "' + @git_commit.commit_hash + '"} to: PUBLISHED) { id }
     }
     '
-
   end
 end

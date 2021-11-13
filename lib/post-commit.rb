@@ -70,30 +70,6 @@ graph_cms = GraphCMS.new(gitCommit)
 # }
 
 
-# Random is to make each test unique - do not use in production
-# commit_id = gitCommit.branch_hash + rand(10..1000).to_s
-commit_id = gitCommit.branch_hash
-subject = gitCommit.subject
-committer_email = gitCommit.committer_email
-https_location = gitCommit.https_location
-branch_hash = gitCommit.branch_hash
-
-query = graph_cms.query
-# query = 'mutation makeCommit {
-#   createCommit (data: {
-#     commitMessage: "'+ subject +'"
-#     score: 1
-#     repoCommitId: "'+ commit_id +'"
-#     repository: {
-#         connect: { uri: "'+ https_location +'"}
-#       }
-#     authors: {
-#       connect: { email: "'+ committer_email +'" }
-#     }
-#   }) { id }
-#     publishCommit(where: {repoCommitId: "'+ commit_id +'"} to: PUBLISHED) { id }
-# }
-# '
 
 uri = URI.parse(@config['cms']['uri'])
 
