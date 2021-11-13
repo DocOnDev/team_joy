@@ -3,6 +3,7 @@ require './lib/git_commit'
 
 describe 'Git Commit' do
   let(:commit){GitCommit.new}
+  let(:cli_dbl){double(CliRunner)}
 
   it 'should have a commit hash' do
     expect(commit.commit_hash).not_to be_nil
@@ -14,7 +15,9 @@ describe 'Git Commit' do
   end
 
   it 'should have a branch name' do
-    expect(commit.branch_name).not_to be_nil
+    commit.cli_runner = cli_dbl
+    allow(cli_dbl).to receive(:run).with('git branch --show-current').and_return('test_branch-234')
+    expect(commit.branch_name).to eq('test_branch-234')
   end
 
   it 'should have a branch hash' do

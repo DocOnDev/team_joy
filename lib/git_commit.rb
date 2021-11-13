@@ -51,7 +51,15 @@ class GitCommit
      @commit_files ||= multi_line_to_array(run_command('git diff --name-only HEAD~1'))
   end
 
+  def cli_runner=(runner)
+    @cli_runner = runner
+  end
+
   private
+  def cli_runner
+    @cli_runner ||= CliRunner.new
+  end
+
   def encode_returns(input)
     input.split("\n").join('\\n')
   end
@@ -70,12 +78,12 @@ class GitCommit
   end
 
   def run_command(command)
-    CliRunner.run(command)
+    cli_runner.run(command)
   end
 end
 
 class CliRunner
-  def self.run(command)
+  def run(command)
     %x[#{command}].chomp
   end
 end
