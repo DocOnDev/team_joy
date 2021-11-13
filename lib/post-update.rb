@@ -1,3 +1,5 @@
+puts "In post-update"
+
 require 'net/http'
 require 'uri'
 require 'json'
