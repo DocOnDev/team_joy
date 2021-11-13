@@ -107,5 +107,3 @@ end
 
 puts response.code
 puts response.body
-
-"Body: #{response.body}"
