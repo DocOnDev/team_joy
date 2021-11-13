@@ -85,12 +85,8 @@ query = 'mutation makeCommit {
     authors: {
       connect: { email: "'+ committer_email +'" }
     }
-  }) {
-    id
-  }
-    publishCommit(where: {repoCommitId: "'+ commit_id +'"} to: PUBLISHED) {
-    id
-  }
+  }) { id }
+    publishCommit(where: {repoCommitId: "'+ commit_id +'"} to: PUBLISHED) { id }
 }
 '
 
