@@ -65,6 +65,32 @@ gitCommit = GitCommit.new
 #   }
 # }
 
+commit_id = gitCommit.branch_hash # (123456789 + rand(10..1000)).to_s
+commit_message = "Starting with commit ID"
+
+query = 'mutation makeCommit {
+  createCommit (data: {
+    commitMessage: "%s"
+    score: 1
+    repoCommitId: "%s"
+    repository: {
+        connect: { uri: "https://github.com/DocOnDev/team_joy"}
+      }
+    authors: {
+      connect: { email: "test@docondev.com" }
+    }
+    branch: {
+      connect: {hash: "branch-hash"}
+    }
+  }) {
+    id
+  }
+    publishCommit(where: {repoCommitId: "%s"} to: PUBLISHED) {
+    id
+  }
+}
+' % [commit_message, commit_id, commit_id]
+
 
 uri = URI.parse(@config['cms']['uri'])
 
@@ -73,7 +99,7 @@ uri = URI.parse(@config['cms']['uri'])
 @request["Authorization"] = "Bearer " + @config['cms']['token'] unless @config['cms']['public']
 req_options = { use_ssl: uri.scheme == "https", }
 
-@request.body = JSON.dump({"query" => "QUERY"})
+@request.body = JSON.dump({"query" => query})
 
 response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
   http.request(@request)
