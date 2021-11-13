@@ -12,11 +12,14 @@ class GraphCMS
         repoCommitId: "' + @git_commit.commit_hash + '"
         commitMessage: "' + @git_commit.subject + '"
         score: ' + (@git_commit.score || 0).to_s + '
+        repository: {
+          connect: { uri: "' + @git_commit.https_location + '"}
+        }
+
       }) { id }
         publishCommit(where: {repoCommitId: "' + @git_commit.commit_hash + '"} to: PUBLISHED) { id }
     }
     '
-
 
   end
 end
