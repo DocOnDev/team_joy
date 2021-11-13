@@ -6,6 +6,8 @@ require 'json'
 require 'yaml'
 # require File.dirname(File.expand_path(__FILE__)) + '/git_commit'
 
+puts "Working Directory #{Dir.pwd}"
+
 class GitCommit
   def commit_hash
     @commit_hash ||= log_details["id"]
