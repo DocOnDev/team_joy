@@ -1,5 +1,5 @@
 require 'rspec'
-require './lib/post-commit'
+# require './lib/post-commit'
 
 describe 'Post Update' do
 end
