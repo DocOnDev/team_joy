@@ -1,3 +1,5 @@
+require 'json'
+
 class GitCommit
   def commit_hash
     @commit_hash ||= log_details["id"]
