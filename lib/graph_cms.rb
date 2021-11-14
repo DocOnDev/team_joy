@@ -5,7 +5,7 @@ class GraphCMS
   end
 
   def query
-    query_string = 'mutation { ' + create_commit + publishCommit + ' }'
+    'mutation { ' + create_commit + publishCommit + ' }'
   end
 
   private
