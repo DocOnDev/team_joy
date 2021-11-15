@@ -90,7 +90,7 @@ class GitCommit
   def load_score
     file = File.read(score_file)
     scores = JSON.parse(file)
-    return scores[subject] || 0
+    scores[subject] || 0
   end
 
   def run_command(command)
