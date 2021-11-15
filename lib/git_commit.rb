@@ -46,7 +46,7 @@ class GitCommit
   end
 
   def score
-    @score ||= 0
+    @score ||= load_score
   end
 
   def commit_files
@@ -77,6 +77,10 @@ class GitCommit
       @log_details.store("files", commit_files)
     end
     @log_details
+  end
+
+  def load_score
+    3
   end
 
   def run_command(command)
