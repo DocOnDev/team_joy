@@ -2,7 +2,6 @@ working_path = Dir.pwd
 require working_path + '/lib/commit_query'
 
 class GraphCMS
-
   def initialize(git_commit)
     @git_commit = git_commit
   end
