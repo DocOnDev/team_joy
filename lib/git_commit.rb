@@ -83,6 +83,8 @@ class GitCommit
     dirname = File.expand_path(File.dirname(__FILE__))
     file = File.read("#{dirname}/TJ_SCORES")
     scores = JSON.parse(file)
+
+    puts "******** SCORES FROM FILE in #{dirname}: #{scores}"
     return scores[subject] || 0
   end
 
