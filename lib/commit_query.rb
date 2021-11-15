@@ -8,6 +8,7 @@ class CommitQuery
 
     puts "Git Branch Hash: #{@git_commit.branch_hash}"
 
+
     'createCommit (data: {
       repoCommitId: "' + @git_commit.commit_hash + '"
       commitMessage: "' + @git_commit.subject + '"
