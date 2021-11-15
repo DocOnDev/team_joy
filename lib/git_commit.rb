@@ -46,7 +46,7 @@ class GitCommit
   end
 
   def score
-    @score ||= subject.scan(/-(\d)-/).first[0].to_i
+    @score ||= 0
   end
 
   def commit_files
