@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+# working_path = Dir.pwd
+# require working_path + '/lib/git_commit'
+
 file_arg = ARGV[0]
 
 class ExitCodes
@@ -14,9 +17,17 @@ end
 
 class CheckCommit
   def check(commit_file)
+    dirname = File.expand_path(File.dirname(__FILE__))
+
     puts "Checking Commit Message in (#{commit_file})"
     content = File.readlines commit_file
-    return ExitCodes.success unless rating_not_found?(content)
+    if !rating_not_found?(content)
+      file_path = "#{dirname}/TJ_SCORES"
+      out_file = File.new(file_path, "w")
+      out_file.puts("write your stuff here")
+      out_file.close
+      return ExitCodes.success
+    end
     abort "Commit rejected: Message #{content} does not contain a rating between 0 and 5."
   end
 

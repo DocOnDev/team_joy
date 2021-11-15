@@ -3,6 +3,7 @@ require 'rspec'
 require './lib/commit-msg'
 
 describe 'Commit Message Handler' do
+  let(:dirname) { './lib' }
 
   before(:each) do
     puts @resource_dir
@@ -21,6 +22,18 @@ describe 'Commit Message Handler' do
       status = @checker.check @file_name
       expect(status).to eq(ExitCodes.success)
     end
+
+    context 'TJ_SCORES file does not exist' do
+      before(:each) do
+        puts "Directory Name: #{dirname}"
+        File.delete(dirname + 'TJ_SCORES') if File.exist?(dirname + 'TJ_SCORES')
+      end
+      it 'should create the TJ_SCORES file' do
+        status = @checker.check @file_name
+        expect(File.exist?("#{dirname}/TJ_SCORES")).to be true
+      end
+    end
+
   end
 
   context 'file content does NOT contain commit pattern' do

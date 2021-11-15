@@ -1,3 +1,4 @@
 /.idea
 /lib/joy_config.yml
+/lib/TJ_SCORES
 deploy_post.sh
