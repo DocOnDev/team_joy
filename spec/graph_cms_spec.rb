@@ -6,7 +6,7 @@ mock_commit_hash = "Stubbed Commit Hash " + rand(10..1000).to_s
 mock_commit_message = "Running Specs"
 mock_repo_location = "git@github.com:DocOnDev/team_joy.git"
 mock_committer_email = "test@docondev.com"
-mock_commit_branch_hash = "mock-branch-hash"
+mock_commit_branch_name = "mock-branch"
 
 describe 'GraphCMS' do
   let(:git_dbl){double(GitCommit)}
@@ -15,7 +15,7 @@ describe 'GraphCMS' do
     allow(git_dbl).to receive(:commit_hash).and_return(mock_commit_hash)
     allow(git_dbl).to receive(:score).and_return(3)
     allow(git_dbl).to receive(:subject).and_return(mock_commit_message)
-    allow(git_dbl).to receive(:branch_hash).and_return(mock_commit_branch_hash)
+    allow(git_dbl).to receive(:branch_name).and_return(mock_commit_branch_name)
     allow(git_dbl).to receive(:https_location).and_return(mock_repo_location)
     allow(git_dbl).to receive(:committer_email).and_return(mock_committer_email)
     @graph_cms = GraphCMS.new(git_dbl)
@@ -64,7 +64,7 @@ describe 'GraphCMS' do
       end
 
       it 'should have a branch' do
-        expect(@graph_cms.query).to include "connect: { hash: \"#{mock_commit_branch_hash}"
+        expect(@graph_cms.query).to include "branch: \"#{mock_commit_branch_name}"
       end
 
 

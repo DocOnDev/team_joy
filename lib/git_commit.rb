@@ -37,10 +37,6 @@ class GitCommit
     @git_branch ||= run_command('git branch --show-current')
   end
 
-  def branch_hash
-    @git_branch_hash ||= run_command("git rev-parse %s" % branch_name)
-  end
-
   def git_location
     @git_location ||= run_command("git config --get remote.origin.url")
   end

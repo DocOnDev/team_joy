@@ -22,7 +22,6 @@ describe 'Git Commit' do
     allow(cli_dbl).to receive(:run).with("git config --get remote.origin.url").and_return(mock_repo_location)
     allow(cli_dbl).to receive(:run).with(/git log -1 HEAD/).and_return(mock_log_response)
     allow(cli_dbl).to receive(:run).with("git diff --name-only HEAD~1").and_return(mock_files_response)
-    allow(cli_dbl).to receive(:run).with("git rev-parse #{mock_branch_name}").and_return(mock_hash)
 
     commit.cli_runner = cli_dbl
   end
@@ -38,10 +37,6 @@ describe 'Git Commit' do
 
   it 'should have a branch name' do
     expect(commit.branch_name).to eq('test_branch-234')
-  end
-
-  it 'should have a branch hash' do
-    expect(commit.branch_hash).to eq(mock_hash)
   end
 
   it 'should have an author name' do
