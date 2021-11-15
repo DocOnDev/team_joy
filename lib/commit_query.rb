@@ -16,6 +16,9 @@ class CommitQuery
       authors: {
         connect: { email: "' + @git_commit.committer_email + '" }
       }
+      branch: {
+        connect: { hash: "' + @git_commit.branch_hash + '" }
+      }
 
     }) { id }'
   end
