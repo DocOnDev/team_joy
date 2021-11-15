@@ -1,4 +1,5 @@
-require 'commit_query'
+working_path = Dir.pwd
+require working_path + '/lib/commit_query'
 
 class GraphCMS
 
