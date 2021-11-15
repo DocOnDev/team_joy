@@ -1,12 +1,7 @@
 require 'rspec'
 require './lib/git_commit'
 
-mock_branch_name = 'test_branch-234'
-mock_hash = 'FAKE-HASH-453453455'
-mock_repo_location = "git@github.com:DocOnDev/TEST_team_joy.git"
-mock_author_name = "Doc Norton"
-mock_author_email = "doc@docondev.com"
-mock_log_response = '{"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"'+mock_author_name+'","committerName":"'+mock_author_name+'","committerEmail":"'+mock_author_email+'","subject":"Highly rated commit.","body":""}'
+mock_log_response = '{"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"'+SpecUtils::MockResponse.committer_name+'","committerName":"'+SpecUtils::MockResponse.committer_name+'","committerEmail":"'+SpecUtils::MockResponse.committer_email+'","subject":"Highly rated commit.","body":""}'
 mock_files_response = "lib/git_commit.rb
 lib/graph_cms.rb
 spec/git_commit_spec.rb
@@ -18,8 +13,8 @@ describe 'Git Commit' do
   let(:cli_dbl){double(CliRunner)}
 
   before(:each) do
-    allow(cli_dbl).to receive(:run).with('git branch --show-current').and_return(mock_branch_name)
-    allow(cli_dbl).to receive(:run).with("git config --get remote.origin.url").and_return(mock_repo_location)
+    allow(cli_dbl).to receive(:run).with('git branch --show-current').and_return(SpecUtils::MockResponse.branch_name)
+    allow(cli_dbl).to receive(:run).with("git config --get remote.origin.url").and_return(SpecUtils::MockResponse.repo_location)
     allow(cli_dbl).to receive(:run).with(/git log -1 HEAD/).and_return(mock_log_response)
     allow(cli_dbl).to receive(:run).with("git diff --name-only HEAD~1").and_return(mock_files_response)
 
@@ -36,11 +31,11 @@ describe 'Git Commit' do
   end
 
   it 'should have a branch name' do
-    expect(commit.branch_name).to eq('test_branch-234')
+    expect(commit.branch_name).to eq(SpecUtils::MockResponse.branch_name)
   end
 
   it 'should have an author name' do
-    expect(commit.author_name).to eq(mock_author_name)
+    expect(commit.author_name).to eq(SpecUtils::MockResponse.committer_name)
   end
 
   it 'should have an committer name' do
@@ -49,7 +44,7 @@ describe 'Git Commit' do
   end
 
   it 'should have an committer email' do
-    expect(commit.committer_email).to eq(mock_author_email)
+    expect(commit.committer_email).to eq(SpecUtils::MockResponse.committer_email)
   end
 
   it 'should have a committer email that matches a basic email pattern' do
@@ -69,11 +64,11 @@ describe 'Git Commit' do
   end
 
   it 'should have a valid git location' do
-    expect(commit.git_location).to match(/.*TEST_team_joy.git/)
+    expect(commit.git_location).to match(/.*team_joy.git/)
   end
 
   it 'should have a valid https location' do
-    expect(commit.https_location).to match(/https:\/\/.*TEST_team_joy/)
+    expect(commit.https_location).to match(/https:\/\/.*team_joy/)
   end
 
   it 'should have a score of 3' do

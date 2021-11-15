@@ -21,6 +21,26 @@ module SpecUtils
     def self.committer_name
       "Test User"
     end
+
+    def self.commit_hash
+      "Stubbed Commit Hash " + rand(10..1000).to_s
+    end
+
+    def self.commit_message
+      "Running Specs"
+    end
+
+    def self.repo_location
+      "git@github.com:DocOnDev/team_joy.git"
+    end
+
+    def self.branch_name
+      "mock-branch"
+    end
+
+    def self.score
+      3
+    end
   end
 
   class Resource

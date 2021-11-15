@@ -2,22 +2,18 @@ require_relative 'spec_utils.rb'
 require 'rspec'
 require './lib/commit_query'
 
-mock_commit_hash = "Stubbed Commit Hash " + rand(10..1000).to_s
-mock_commit_message = "Running Specs"
-mock_repo_location = "git@github.com:DocOnDev/team_joy.git"
-mock_committer_email = "test@docondev.com"
-mock_commit_branch_name = "mock-branch"
+mock_hash = SpecUtils::MockResponse.commit_hash
 
 describe 'CommitQuery' do
   let(:git_dbl){double(GitCommit)}
 
   before(:each) do
-    allow(git_dbl).to receive(:commit_hash).and_return(mock_commit_hash)
-    allow(git_dbl).to receive(:score).and_return(3)
-    allow(git_dbl).to receive(:subject).and_return(mock_commit_message)
-    allow(git_dbl).to receive(:branch_name).and_return(mock_commit_branch_name)
-    allow(git_dbl).to receive(:https_location).and_return(mock_repo_location)
-    allow(git_dbl).to receive(:committer_email).and_return(mock_committer_email)
+    allow(git_dbl).to receive(:commit_hash).and_return(mock_hash)
+    allow(git_dbl).to receive(:score).and_return(SpecUtils::MockResponse.score)
+    allow(git_dbl).to receive(:subject).and_return(SpecUtils::MockResponse.commit_message)
+    allow(git_dbl).to receive(:branch_name).and_return(SpecUtils::MockResponse.branch_name)
+    allow(git_dbl).to receive(:https_location).and_return(SpecUtils::MockResponse.repo_location)
+    allow(git_dbl).to receive(:committer_email).and_return(SpecUtils::MockResponse.committer_email)
     @commitQuery = CommitQuery.new(git_dbl)
   end
 
@@ -48,7 +44,7 @@ describe 'CommitQuery' do
       end
 
       it 'should have a commit hash' do
-        expect(@commitQuery.create_query).to include "repoCommitId: \"#{mock_commit_hash}"
+        expect(@commitQuery.create_query).to include "repoCommitId: \"#{mock_hash}"
       end
 
       it 'should indicate the score' do
@@ -56,19 +52,19 @@ describe 'CommitQuery' do
       end
 
       it 'should have a repo' do
-        expect(@commitQuery.create_query).to include "uri: \"#{mock_repo_location}"
+        expect(@commitQuery.create_query).to include "uri: \"#{SpecUtils::MockResponse.repo_location}"
       end
 
       it 'should have an author' do
-        expect(@commitQuery.create_query).to include "email: \"#{mock_committer_email}"
+        expect(@commitQuery.create_query).to include "email: \"#{SpecUtils::MockResponse.committer_email}"
       end
 
       it 'should have a subject' do
-        expect(@commitQuery.create_query).to include "commitMessage: \"#{mock_commit_message}"
+        expect(@commitQuery.create_query).to include "commitMessage: \"#{SpecUtils::MockResponse.commit_message}"
       end
 
       it 'should have a branch' do
-        expect(@commitQuery.create_query).to include "branch: \"#{mock_commit_branch_name}"
+        expect(@commitQuery.create_query).to include "branch: \"#{SpecUtils::MockResponse.branch_name}"
       end
 
     end
@@ -88,7 +84,7 @@ describe 'CommitQuery' do
       end
 
       it 'should have a commit hash' do
-        expect(@commitQuery.publish_query).to include "repoCommitId: \"#{mock_commit_hash}"
+        expect(@commitQuery.publish_query).to include "repoCommitId: \"#{mock_hash}"
       end
 
     end
