@@ -18,12 +18,12 @@ describe 'CommitQuery' do
     allow(git_dbl).to receive(:branch_name).and_return(mock_commit_branch_name)
     allow(git_dbl).to receive(:https_location).and_return(mock_repo_location)
     allow(git_dbl).to receive(:committer_email).and_return(mock_committer_email)
-    @graph_cms = CommitQuery.new(git_dbl)
+    @commitQuery = CommitQuery.new(git_dbl)
   end
 
   context 'Without Commit Object' do
     it 'should raise an error' do
-      expect {GraphCMS.new()}.to raise_error(ArgumentError)
+      expect {CommitQuery.new()}.to raise_error(ArgumentError)
     end
   end
 
@@ -31,40 +31,40 @@ describe 'CommitQuery' do
     context 'missing a commit hash' do
       it 'should raise an error' do
         allow(git_dbl).to receive(:commit_hash)
-        expect {@graph_cms.create_query}.to raise_error(/commit hash/)
+        expect {@commitQuery.create_query}.to raise_error(/commit hash/)
       end
     end
 
     context 'missing a score' do
       it 'should default score to 0' do
         allow(git_dbl).to receive(:score).and_return(nil)
-        expect(@graph_cms.create_query).to include "score: 0"
+        expect(@commitQuery.create_query).to include "score: 0"
       end
     end
 
     context 'with a good commit' do
       it 'should have a commit hash' do
-        expect(@graph_cms.create_query).to include "repoCommitId: \"#{mock_commit_hash}"
+        expect(@commitQuery.create_query).to include "repoCommitId: \"#{mock_commit_hash}"
       end
 
       it 'should indicate the score' do
-        expect(@graph_cms.create_query).to include "score: 3"
+        expect(@commitQuery.create_query).to include "score: 3"
       end
 
       it 'should have a repo' do
-        expect(@graph_cms.create_query).to include "uri: \"#{mock_repo_location}"
+        expect(@commitQuery.create_query).to include "uri: \"#{mock_repo_location}"
       end
 
       it 'should have an author' do
-        expect(@graph_cms.create_query).to include "email: \"#{mock_committer_email}"
+        expect(@commitQuery.create_query).to include "email: \"#{mock_committer_email}"
       end
 
       it 'should have a subject' do
-        expect(@graph_cms.create_query).to include "commitMessage: \"#{mock_commit_message}"
+        expect(@commitQuery.create_query).to include "commitMessage: \"#{mock_commit_message}"
       end
 
       it 'should have a branch' do
-        expect(@graph_cms.create_query).to include "branch: \"#{mock_commit_branch_name}"
+        expect(@commitQuery.create_query).to include "branch: \"#{mock_commit_branch_name}"
       end
 
     end
