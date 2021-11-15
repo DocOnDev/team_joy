@@ -6,7 +6,7 @@ mock_hash = 'FAKE-HASH-453453455'
 mock_repo_location = "git@github.com:DocOnDev/TEST_team_joy.git"
 mock_author_name = "Doc Norton"
 mock_author_email = "doc@docondev.com"
-mock_log_response = '{"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"'+mock_author_name+'","committerName":"'+mock_author_name+'","committerEmail":"'+mock_author_email+'","subject":"-3- Ran Specs Again","body":""}'
+mock_log_response = '{"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"'+mock_author_name+'","committerName":"'+mock_author_name+'","committerEmail":"'+mock_author_email+'","subject":"Highly rated commit.","body":""}'
 mock_files_response = "lib/git_commit.rb
 lib/graph_cms.rb
 spec/git_commit_spec.rb

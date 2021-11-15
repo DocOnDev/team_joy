@@ -80,7 +80,11 @@ class GitCommit
   end
 
   def load_score
-    3
+    dirname = File.expand_path(File.dirname(__FILE__))
+    score_file_name = "#{dirname}/TJ_SCORES"
+    file = File.read(score_file_name)
+    scores = JSON.parse(file)
+    return scores[subject] || 0
   end
 
   def run_command(command)
