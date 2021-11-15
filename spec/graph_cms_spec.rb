@@ -67,7 +67,6 @@ describe 'GraphCMS' do
         expect(@graph_cms.query).to include "branch: \"#{mock_commit_branch_name}"
       end
 
-
     end
   end
 
