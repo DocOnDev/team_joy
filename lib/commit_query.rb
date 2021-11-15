@@ -6,6 +6,8 @@ class CommitQuery
   def create_query
     raise "Cannot record a commit without a commit hash" unless @git_commit.commit_hash
 
+    puts "Git Branch Hash: #{@git_commit.branch_hash}"
+    
     'createCommit (data: {
       repoCommitId: "' + @git_commit.commit_hash + '"
       commitMessage: "' + @git_commit.subject + '"
