@@ -57,6 +57,14 @@ class GitCommit
     @cli_runner = runner
   end
 
+  def score_file= file_name
+    @score_file = file_name
+  end
+
+  def score_file
+    @score_file ||= File.expand_path(File.dirname(__FILE__)) + "/TJ_SCORES"
+  end
+
   private
   def cli_runner
     @cli_runner ||= CliRunner.new
