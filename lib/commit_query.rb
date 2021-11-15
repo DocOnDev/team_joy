@@ -19,7 +19,6 @@ class CommitQuery
       branch: {
         connect: { hash: "' + @git_commit.branch_hash + '" }
       }
-
     }) { id }'
   end
 
