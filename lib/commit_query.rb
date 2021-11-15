@@ -21,6 +21,8 @@ class CommitQuery
   end
 
   def publish_query
+    raise "Cannot record a commit without a commit hash" unless @git_commit.commit_hash
+
     'publishCommit(where: {repoCommitId: "' + @git_commit.commit_hash + '"} to: PUBLISHED) { id }'
   end
 end

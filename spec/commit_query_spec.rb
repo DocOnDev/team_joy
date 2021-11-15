@@ -43,6 +43,10 @@ describe 'CommitQuery' do
     end
 
     context 'with a good commit' do
+      it 'should have a create statement' do
+        expect(@commitQuery.create_query).to include "createCommit"
+      end
+
       it 'should have a commit hash' do
         expect(@commitQuery.create_query).to include "repoCommitId: \"#{mock_commit_hash}"
       end
@@ -70,4 +74,23 @@ describe 'CommitQuery' do
     end
   end
 
+  describe 'publish_query' do
+    context 'missing a commit hash' do
+      it 'should raise an error' do
+        allow(git_dbl).to receive(:commit_hash)
+        expect {@commitQuery.publish_query}.to raise_error(/commit hash/)
+      end
+    end
+
+    context 'with a good commit' do
+      it 'should have a publish statement' do
+        expect(@commitQuery.publish_query).to include "publishCommit"
+      end
+
+      it 'should have a commit hash' do
+        expect(@commitQuery.publish_query).to include "repoCommitId: \"#{mock_commit_hash}"
+      end
+
+    end
+  end
 end
