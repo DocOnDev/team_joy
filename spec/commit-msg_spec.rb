@@ -5,7 +5,8 @@ require './lib/commit-msg'
 describe 'Commit Message Handler' do
   let(:output_dir_name) { './lib' }
   let(:checker) {CheckCommit.new}
-  let(:commit_file_name) {SpecUtils::Resource.file("PassingWith3.txt")}
+  let(:preserve_file) {SpecUtils::Resource.file("PassingWith3.txt")}
+  let(:commit_file_name) {SpecUtils::Resource.file("PassingWith3.txt2")}
 
   it 'should tell me the file name' do
     output = SpecUtils::Capture.stdout { checker.check commit_file_name }
@@ -14,16 +15,36 @@ describe 'Commit Message Handler' do
 
 
   context 'file content does contain commit pattern' do
+    before(:each) do
+      FileUtils.copy(preserve_file, commit_file_name)
+      @score_file_name = "#{output_dir_name}/TJ_SCORES"
+    end
+
     it 'should succeed' do
       status = checker.check commit_file_name
       expect(status).to eq(ExitCodes.success)
     end
 
+    it 'should remove the score from the commit message subject' do
+      status = checker.check commit_file_name
+      file_content = File.readlines(commit_file_name)
+      expect(file_content.grep(/\-[0-5]\-/).none?).to be true
+    end
+
+
     context 'TJ_SCORES file does not exist' do
       it 'should create the TJ_SCORES file' do
-        File.delete(output_dir_name + 'TJ_SCORES') if File.exist?(output_dir_name + 'TJ_SCORES')
+        File.delete(@score_file_name) if File.exist?(@score_file_name)
         status = checker.check commit_file_name
-        expect(File.exist?("#{output_dir_name}/TJ_SCORES")).to be true
+        expect(File.exist?(@score_file_name)).to be true
+      end
+    end
+
+    context 'score file does exist' do
+      it 'should have a score for each commit message' do
+        file = File.read(@score_file_name)
+        scores = JSON.parse(file)
+        expect(scores["Highly rated commit."]).to eq(3)
       end
     end
 

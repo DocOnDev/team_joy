@@ -1,1 +1,3 @@
 -3- Highly rated commit.
+
+Has some extra lines as well.

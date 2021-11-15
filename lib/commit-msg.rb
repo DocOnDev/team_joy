@@ -21,11 +21,10 @@ class CheckCommit
 
     puts "Checking Commit Message in (#{commit_file})"
     content = File.readlines commit_file
-    if !rating_not_found?(content)
-      file_path = "#{dirname}/TJ_SCORES"
-      out_file = File.new(file_path, "w")
-      out_file.puts("write your stuff here")
-      out_file.close
+    if rating_found?(content)
+      score = strip_score_from_subject(content[0])
+      write_to_scores_file("#{dirname}/TJ_SCORES", content[0], score)
+      File.write(commit_file, content.join("\n"))
       return ExitCodes.success
     end
     abort "Commit rejected: Message #{content} does not contain a rating between 0 and 5."
@@ -33,8 +32,20 @@ class CheckCommit
 
   private
 
-  def rating_not_found?(content)
-    content.grep(/\-[0-5]\-/).none?
+  def write_to_scores_file(file_path, subject, score)
+    out_file = File.new(file_path, "w")
+    out_file.puts('{"'+subject.chomp+'":'+score.to_s+'}')
+    out_file.close
+  end
+
+  def strip_score_from_subject(subject)
+    score = subject.scan(/-(\d)-/).first[0].to_i
+    subject.slice!("-#{score}- ")
+    return score
+  end
+
+  def rating_found?(content)
+    content.grep(/\-[0-5]\-/).any?
   end
 
 end
