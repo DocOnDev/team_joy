@@ -4,14 +4,13 @@ require 'net/http'
 require 'uri'
 require 'json'
 require 'yaml'
-working_path = Dir.pwd
-require working_path + '/lib/git_commit'
-require working_path + '/lib/graph_cms'
+require 'git_commit'
+require 'graph_cms'
 gitCommit = GitCommit.new
 gitCommit.score_file = File.expand_path(File.dirname(__FILE__)) + "/TJ_SCORES"
 graph_cms = GraphCMS.new(gitCommit)
 
-@config = YAML.load_file(working_path + '/lib/joy_config.yml')
+@config = YAML.load_file('joy_config.yml')
 
 # mutation makeCommit ($authorEmail: String!, $commitId: String!) {
 #   upsertAuthor (
