@@ -4,8 +4,8 @@ require 'net/http'
 require 'uri'
 require 'json'
 require 'yaml'
-require 'git_commit'
-require 'graph_cms'
+require_relative 'git_commit'
+require_relative 'graph_cms'
 gitCommit = GitCommit.new
 gitCommit.score_file = File.expand_path(File.dirname(__FILE__)) + "/TJ_SCORES"
 graph_cms = GraphCMS.new(gitCommit)
