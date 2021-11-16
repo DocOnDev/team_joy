@@ -6,11 +6,14 @@ require 'json'
 require 'yaml'
 require_relative 'git_commit'
 require_relative 'graph_cms'
+
+dirname = File.expand_path(File.dirname(__FILE__))
+
 gitCommit = GitCommit.new
-gitCommit.score_file = File.expand_path(File.dirname(__FILE__)) + "/TJ_SCORES"
+gitCommit.score_file = "#{dirname}/TJ_SCORES"
 graph_cms = GraphCMS.new(gitCommit)
 
-@config = YAML.load_file('joy_config.yml')
+@config = YAML.load_file("#{dirname}/joy_config.yml")
 
 # mutation makeCommit ($authorEmail: String!, $commitId: String!) {
 #   upsertAuthor (
