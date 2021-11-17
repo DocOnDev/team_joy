@@ -69,7 +69,7 @@ describe 'CommitQuery' do
       end
 
       it 'should have files' do
-        expect(@commitQuery.create_query).to include "files: #{SpecUtils::MockResponse.files}"
+        expect(@commitQuery.create_query).to include "committedFiles: #{SpecUtils::MockResponse.files}"
       end
 
 

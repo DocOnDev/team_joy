@@ -11,7 +11,7 @@ class CommitQuery
       commitMessage: "' + @git_commit.subject + '"
       score: ' + (@git_commit.score || 0).to_s + '
       branch: "' + @git_commit.branch_name + '"
-      files: ' + (@git_commit.files).to_s + '
+      committedFiles: ' + (@git_commit.files).to_s + '
       repository: {
         connect: { uri: "' + @git_commit.https_location + '"}
       }
