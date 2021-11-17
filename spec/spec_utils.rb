@@ -41,6 +41,17 @@ module SpecUtils
     def self.score
       3
     end
+
+    def self.raw_files
+      "lib/git_commit.rb
+      lib/graph_cms.rb
+      spec/git_commit_spec.rb
+      "
+    end
+
+    def self.files
+      raw_files.split(/\n+|\r+/).reject(&:empty?)
+    end
   end
 
   class Resource

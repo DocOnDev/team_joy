@@ -16,6 +16,7 @@ describe 'GraphCMS' do
     allow(git_dbl).to receive(:https_location).and_return(SpecUtils::MockResponse.repo_location)
     allow(git_dbl).to receive(:committer_email).and_return(SpecUtils::MockResponse.committer_email)
     allow(git_dbl).to receive(:committer_name).and_return(SpecUtils::MockResponse.committer_name)
+    allow(git_dbl).to receive(:files).and_return(SpecUtils::MockResponse.files)
     @graph_cms = GraphCMS.new(git_dbl)
   end
 
