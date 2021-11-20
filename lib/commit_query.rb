@@ -8,7 +8,7 @@ class CommitQuery
 
     puts "body: #{@git_commit.body}"
 
-    'createCommit (data: {
+    response = 'createCommit (data: {
       repoCommitId: "' + @git_commit.commit_hash + '"
       subject: "' + @git_commit.subject + '"
       body: "' + @git_commit.body + '"
@@ -22,6 +22,9 @@ class CommitQuery
         connect: { email: "' + @git_commit.committer_email + '" }
       }
     }) { id }'
+
+    puts response
+    response
   end
 
   def publish_query
