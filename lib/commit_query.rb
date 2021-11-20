@@ -9,6 +9,8 @@ class CommitQuery
     'createCommit (data: {
       repoCommitId: "' + @git_commit.commit_hash + '"
       commitMessage: "' + @git_commit.subject + '"
+      subject: "' + @git_commit.subject + '"
+      body: "' + @git_commit.body + '"
       score: ' + (@git_commit.score || 0).to_s + '
       branch: "' + @git_commit.branch_name + '"
       committedFiles: ' + (@git_commit.files).to_s + '

@@ -30,6 +30,10 @@ module SpecUtils
       "Running Specs"
     end
 
+    def self.body
+      "More detailed content of the commit message"
+    end
+
     def self.repo_location
       "git@github.com:DocOnDev/team_joy.git"
     end

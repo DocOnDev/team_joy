@@ -12,6 +12,7 @@ describe 'GraphCMS' do
     allow(git_dbl).to receive(:commit_hash).and_return(mock_hash)
     allow(git_dbl).to receive(:score).and_return(3)
     allow(git_dbl).to receive(:subject).and_return(SpecUtils::MockResponse.commit_message)
+    allow(git_dbl).to receive(:body).and_return(SpecUtils::MockResponse.body)
     allow(git_dbl).to receive(:branch_name).and_return(SpecUtils::MockResponse.branch_name)
     allow(git_dbl).to receive(:https_location).and_return(SpecUtils::MockResponse.repo_location)
     allow(git_dbl).to receive(:committer_email).and_return(SpecUtils::MockResponse.committer_email)

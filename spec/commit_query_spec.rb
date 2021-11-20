@@ -11,6 +11,7 @@ describe 'CommitQuery' do
     allow(git_dbl).to receive(:commit_hash).and_return(mock_hash)
     allow(git_dbl).to receive(:score).and_return(SpecUtils::MockResponse.score)
     allow(git_dbl).to receive(:subject).and_return(SpecUtils::MockResponse.commit_message)
+    allow(git_dbl).to receive(:body).and_return(SpecUtils::MockResponse.body)
     allow(git_dbl).to receive(:branch_name).and_return(SpecUtils::MockResponse.branch_name)
     allow(git_dbl).to receive(:https_location).and_return(SpecUtils::MockResponse.repo_location)
     allow(git_dbl).to receive(:committer_email).and_return(SpecUtils::MockResponse.committer_email)
@@ -62,6 +63,11 @@ describe 'CommitQuery' do
 
       it 'should have a subject' do
         expect(@commitQuery.create_query).to include "commitMessage: \"#{SpecUtils::MockResponse.commit_message}"
+        expect(@commitQuery.create_query).to include "subject: \"#{SpecUtils::MockResponse.commit_message}"
+      end
+
+      it 'should have a body' do
+        expect(@commitQuery.create_query).to include "body: \"#{SpecUtils::MockResponse.body}"
       end
 
       it 'should have a branch' do
