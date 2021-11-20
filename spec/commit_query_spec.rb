@@ -62,7 +62,6 @@ describe 'CommitQuery' do
       end
 
       it 'should have a subject' do
-        expect(@commitQuery.create_query).to include "commitMessage: \"#{SpecUtils::MockResponse.commit_message}"
         expect(@commitQuery.create_query).to include "subject: \"#{SpecUtils::MockResponse.commit_message}"
       end
 
