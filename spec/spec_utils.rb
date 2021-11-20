@@ -31,7 +31,9 @@ module SpecUtils
     end
 
     def self.body
-      "More detailed content of the commit message"
+      "More detailed content of the commit message
+
+      Has returns and stuff."
     end
 
     def self.repo_location
