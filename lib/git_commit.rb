@@ -26,7 +26,7 @@ class GitCommit
   end
 
   def body
-    @body ||= log_details["body"]
+    @body ||= encode_returns(log_details["body"]).chomp
   end
 
   def files
