@@ -1,8 +1,5 @@
 #!/usr/bin/env ruby
 
-# working_path = Dir.pwd
-# require working_path + '/lib/git_commit'
-
 file_arg = ARGV[0]
 
 class ExitCodes
