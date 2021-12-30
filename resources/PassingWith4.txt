@@ -1,0 +1,3 @@
+-4- Highly rated commit.
+
+Includes some additional text.
