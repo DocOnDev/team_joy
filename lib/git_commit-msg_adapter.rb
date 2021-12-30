@@ -8,6 +8,7 @@ class GitCommitMessageAdapter
     content = load_content_from_file commit_file_name
     commit_message.subject = get_subject_from content
     commit_message.score = get_score_from content
+    commit_message.body = get_body_from content
 
     return commit_message
   end
@@ -25,6 +26,12 @@ private
     subject_line = get_subject_line_from(content)
     subject_line.slice!("-#{get_score_from(content)}- ")
     subject_line.strip()
+  end
+
+  def get_body_from content
+    content_without_subject = content.difference([get_subject_line_from(content)])
+    content_without_subject.shift if content_without_subject[0] == "\n"
+    content_without_subject.join()
   end
 
   def get_subject_line_from content

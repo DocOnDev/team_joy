@@ -29,5 +29,30 @@ describe 'Git Commit Message Adapter' do
     it "should have a valid subject" do
       expect(@commitMessage.subject).to eq("Highly rated commit.")
     end
+
+    it "should have a single string message body" do
+      expect(@commitMessage.body).to eq("Has some extra lines as well.\nWhy not?\n")
+    end
+  end
+
+  context "single-line commit message with valid score" do
+    let(:commit_file) {SpecUtils::Resource.file("PassingWith2.txt")}
+
+    before(:each) do
+      @adapter = GitCommitMessageAdapter.new
+      @commitMessage = @adapter.message_from_file(commit_file)
+    end
+
+    it "should have a valid score" do
+      expect(@commitMessage.score).to eq(2)
+    end
+
+    it "should have a valid subject" do
+      expect(@commitMessage.subject).to eq("Lowly rated commit.")
+    end
+
+    it "should have an empty message body" do
+      expect(@commitMessage.body).to eq("")
+    end
   end
 end
