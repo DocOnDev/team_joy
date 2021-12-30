@@ -26,5 +26,8 @@ describe 'Git Commit Message Adapter' do
       expect(@adapter.message_from_file(commit_file_with_4).score).to eq(4)
     end
 
+    it "should have a valid subject" do
+      expect(@commitMessage.subject).to eq("Highly rated commit.")
+    end
   end
 end
