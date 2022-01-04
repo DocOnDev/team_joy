@@ -1,6 +1,6 @@
 cms:
   uri: https://some.graphcms.com/version/key/branch
-  public: false
+  public: true
   token: SomeToken
 score-file:
   path: ./score_file

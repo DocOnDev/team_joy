@@ -31,12 +31,12 @@ describe 'Code Joy Configuration' do
       expect(@config.cms_token).to eq("SomeToken")
     end
 
-    it 'should be a private CMS endpoint' do
-      expect(@config.cms_public).to be false
+    it 'should be a public CMS endpoint' do
+      expect(@config.cms_public).to be true
     end
   end
 
-  context 'given a configuration with no score' do
+  context 'given a configuration with no score entry' do
     let(:config_file) {SpecUtils::Resource.file("config_sample_no_score.yml")}
 
     before(:each) do
