@@ -1,6 +1,11 @@
 class CommitMessage
   attr_reader :subject, :score, :body
 
+  def initialize
+    @subject = ""
+    @body = ""
+  end
+
   def subject=(subject)
     abort "A commit subject must be a String" unless subject.is_a?(String)
     @subject = subject

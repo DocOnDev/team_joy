@@ -2,6 +2,7 @@
 
 require_relative 'joy_config'
 require_relative 'git_commit-msg_adapter'
+require_relative 'commit_message_writer'
 
 file_arg = ARGV[0]
 
@@ -22,7 +23,8 @@ class CheckCommit
     message = GitCommitMessageAdapter.message_from_file(commit_file)
     config = JoyConfig.new()
     write_to_scores_file(config.score_file_name, message.subject, message.score)
-    File.write(commit_file, message.subject + "\n" + message.body)
+    writer = CommitMessageWriter.new(message)
+    writer.write_to_file(commit_file)
     return ExitCodes.success
   end
 
