@@ -1,4 +1,5 @@
 require 'json'
+require_relative 'joy_config'
 
 class GitCommit
   def commit_hash
@@ -62,7 +63,8 @@ class GitCommit
   end
 
   def score_file
-    @score_file ||= File.expand_path(File.dirname(__FILE__)) + "/TJ_SCORES"
+    config = JoyConfig.new
+    @score_file ||= config.score_file_name
   end
 
   private
