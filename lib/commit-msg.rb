@@ -32,6 +32,7 @@ class CheckCommit
 
   def self.write_to_scores_file(file_path, subject, score)
     out_file = File.new(file_path, "w")
+    puts "Writing Score: " + score.to_s
     out_file.puts('{"'+subject.chomp+'":'+score.to_s+'}')
     out_file.close
   end

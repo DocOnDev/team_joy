@@ -4,6 +4,6 @@ class CommitMessageWriter
   end
 
   def write_to_file(file_name)
-    File.write(file_name, @message.subject + "\n" + @message.body)
+    File.write(file_name, @message.subject + "\n\n" + @message.body)
   end
 end

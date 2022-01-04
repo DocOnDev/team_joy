@@ -27,8 +27,9 @@ describe 'Commit Message Writer' do
       content = File.readlines(COMMIT_MESSAGE_FILE)
       expect(content[0].chomp).to eq(SUBJECT)
       lines = BODY.split("\n")
-      expect(content[1].chomp).to eq(lines[0])
-      expect(content[2].chomp).to eq(lines[1])
+      expect(content[1]).to eq("\n")
+      expect(content[2].chomp).to eq(lines[0])
+      expect(content[3].chomp).to eq(lines[1])
     end
   end
 
@@ -45,7 +46,9 @@ describe 'Commit Message Writer' do
 
       content = File.readlines(COMMIT_MESSAGE_FILE)
       expect(content[0].chomp).to eq(SUBJECT)
-      expect(content[1]).to be_nil
+      expect(content[1]).to eq("\n")
+      expect(content[2]).to be_nil
+
     end
   end
 
