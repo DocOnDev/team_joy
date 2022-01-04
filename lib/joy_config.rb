@@ -13,7 +13,7 @@ class JoyConfig
   end
 
   def cms_public
-    @cms.public
+    @cms.is_public
   end
 
   def cms_token
@@ -35,7 +35,7 @@ class CMS
     @cms["uri"]
   end
 
-  def public
+  def is_public
     @cms["public"]
   end
 
@@ -52,6 +52,10 @@ class ScoreFile
   end
 
   def name
+    File.expand_path(File.dirname(__FILE__)) + "/" + raw_file_name
+  end
+
+  def raw_file_name
     return DEFAULT_SCORE_FILE if !@score_file
     @score_file["path"] || DEFAULT_SCORE_FILE
   end

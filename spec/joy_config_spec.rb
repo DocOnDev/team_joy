@@ -20,7 +20,7 @@ describe 'Code Joy Configuration' do
     end
 
     it 'should have a score file path' do
-      expect(@config.score_file_name).to eq("./score_file")
+      expect(@config.score_file_name).to include("./score_file")
     end
 
     it 'should have a CMS URI' do
@@ -44,7 +44,7 @@ describe 'Code Joy Configuration' do
     end
 
     it 'should default the score file to ./TJ_SCORES' do
-      expect(@config.score_file_name).to eq("./TJ_SCORES")
+      expect(@config.score_file_name).to include("./TJ_SCORES")
     end
   end
 
@@ -56,7 +56,7 @@ describe 'Code Joy Configuration' do
     end
 
     it 'should default the score file to ./TJ_SCORES' do
-      expect(@config.score_file_name).to eq("./TJ_SCORES")
+      expect(@config.score_file_name).to include("./TJ_SCORES")
     end
   end
 
@@ -68,7 +68,7 @@ describe 'Code Joy Configuration' do
     end
 
     it 'should default the score file to ./TJ_SCORES' do
-      expect(@config.score_file_name).to eq("./TJ_SCORES")
+      expect(@config.score_file_name).to include("./TJ_SCORES")
     end
   end
 
