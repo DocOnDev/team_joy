@@ -1,4 +1,4 @@
-require 'commit_message'
+require_relative 'commit_message'
 
 class GitCommitMessageAdapter
 

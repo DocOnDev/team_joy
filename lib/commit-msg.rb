@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'joy_config'
-require 'git_commit-msg_adapter'
+require_relative 'joy_config'
+require_relative 'git_commit-msg_adapter'
 
 file_arg = ARGV[0]
 
@@ -16,18 +16,19 @@ class ExitCodes
 end
 
 class CheckCommit
-  def check(commit_file)
+
+  def self.check(commit_file)
     puts "Checking Commit Message in (#{commit_file})"
     message = GitCommitMessageAdapter.message_from_file(commit_file)
     config = JoyConfig.new()
     write_to_scores_file(config.score_file_name, message.subject, message.score)
-    File.write(commit_file, message.body)
+    File.write(commit_file, message.subject + "\n" + message.body)
     return ExitCodes.success
   end
 
   private
 
-  def write_to_scores_file(file_path, subject, score)
+  def self.write_to_scores_file(file_path, subject, score)
     out_file = File.new(file_path, "w")
     out_file.puts('{"'+subject.chomp+'":'+score.to_s+'}')
     out_file.close
@@ -36,6 +37,5 @@ class CheckCommit
 end
 
 if file_arg
-  check = CheckCommit.new
-  check.check(file_arg)
+  CheckCommit.check(file_arg)
 end
