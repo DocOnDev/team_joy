@@ -4,22 +4,24 @@ require 'net/http'
 require 'uri'
 require 'json'
 require 'yaml'
+require_relative 'joy_config'
 require_relative 'git_commit'
 require_relative 'graph_cms'
 
 dirname = File.expand_path(File.dirname(__FILE__))
 
+config = JoyConfig.new()
+
 gitCommit = GitCommit.new
-gitCommit.score_file = "#{dirname}/TJ_SCORES"
+gitCommit.score_file = config.score_file_name
+
 graph_cms = GraphCMS.new(gitCommit)
 
-@config = YAML.load_file("#{dirname}/joy_config.yml")
-
-cms_uri = URI.parse(@config['cms']['uri'])
+cms_uri = URI.parse(config.cms_uri)
 
 @request = Net::HTTP::Post.new(cms_uri)
 @request["Accept"] = "application/json"
-@request["Authorization"] = "Bearer " + @config['cms']['token'] unless @config['cms']['public']
+@request["Authorization"] = "Bearer " + config.cms_token unless config.is_cms_public?
 req_options = { use_ssl: cms_uri.scheme == "https", }
 
 @request.body = JSON.dump({"query" => graph_cms.query})

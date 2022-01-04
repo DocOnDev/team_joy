@@ -3,7 +3,6 @@ require 'rspec'
 require './lib/commit-msg'
 
 describe 'Commit Message Handler' do
-  let(:output_dir_name) { './lib' }
   let(:preserve_file) {SpecUtils::Resource.file("PassingWith3.txt")}
   let(:commit_file_name) {SpecUtils::Resource.file("PassingWith3.txt2")}
 
@@ -16,7 +15,8 @@ describe 'Commit Message Handler' do
   context 'given file content does contain commit pattern' do
     before(:each) do
       FileUtils.copy(preserve_file, commit_file_name)
-      @score_file_name = "#{output_dir_name}/TJ_SCORES"
+      config = JoyConfig.new()
+      @score_file_name = config.score_file_name
     end
 
     it 'should succeed' do
