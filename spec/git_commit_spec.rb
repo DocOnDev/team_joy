@@ -71,8 +71,4 @@ describe 'Git Commit' do
     expect(commit.https_location).to match(/https:\/\/.*team_joy/)
   end
 
-  it 'should have a score of 3' do
-    expect(commit.score).to eq(3)
-  end
-
 end
