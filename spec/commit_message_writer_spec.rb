@@ -45,7 +45,6 @@ describe 'Commit Message Writer' do
     end
 
     it 'should write the subject and no body' do
-      puts "Subject and NO Body"
       writer.write_to_file(COMMIT_MESSAGE_FILE)
 
       content = File.readlines(COMMIT_MESSAGE_FILE)
