@@ -14,7 +14,7 @@ describe 'Commit Message Handler' do
   end
 
 
-  context 'file content does contain commit pattern' do
+  context 'given file content does contain commit pattern' do
     before(:each) do
       FileUtils.copy(preserve_file, commit_file_name)
       @score_file_name = "#{output_dir_name}/TJ_SCORES"

@@ -8,7 +8,14 @@ describe 'Code Joy Configuration' do
     let(:missing_config_file) {'./not_a_file.yml'}
 
     it 'should fail a missing config file' do
-      expect {JoyConfig.new(missing_config_file)}.to raise_error(ArgumentError, /Invalid Configuration/)
+      expect {JoyConfig.new(missing_config_file)}.to raise_error(ArgumentError, /Invalid Configuration File Path/)
+    end
+  end
+
+  context 'given no config file' do
+    it 'should default to joy_config.yml in the same directory'do
+      config = JoyConfig.new()
+      expect(config.is_loaded_from_default?).to be true
     end
   end
 
@@ -17,6 +24,10 @@ describe 'Code Joy Configuration' do
 
     before(:each) do
       @config = JoyConfig.new(config_file)
+    end
+
+    it 'should not be loaded from default' do
+      expect(@config.is_loaded_from_default?).to be false
     end
 
     it 'should have a score file path' do
@@ -32,7 +43,7 @@ describe 'Code Joy Configuration' do
     end
 
     it 'should be a public CMS endpoint' do
-      expect(@config.cms_public).to be true
+      expect(@config.is_cms_public?).to be true
     end
   end
 

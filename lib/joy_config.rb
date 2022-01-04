@@ -1,9 +1,12 @@
 require 'yaml'
 
 class JoyConfig
-  def initialize(config_file)
-    raise ArgumentError.new("Invalid Configuration File") unless File.file?(config_file)
+  DEFAULT_CONFIG_FILE = File.expand_path(File.dirname(__FILE__))+"/joy_config.yml"
+
+  def initialize(config_file=DEFAULT_CONFIG_FILE)
+    raise ArgumentError.new("Invalid Configuration File Path") unless File.file?(config_file)
     @config = YAML.load_file(config_file)
+    @is_loaded_from_default = DEFAULT_CONFIG_FILE == config_file
     @cms = CMS.new(@config["cms"])
     @score_file = ScoreFile.new(@config["score-file"])
   end
@@ -12,8 +15,8 @@ class JoyConfig
     @cms.uri
   end
 
-  def cms_public
-    @cms.is_public
+  def is_cms_public?
+    @cms.is_public?
   end
 
   def cms_token
@@ -22,6 +25,10 @@ class JoyConfig
 
   def score_file_name
     @score_file.name
+  end
+
+  def is_loaded_from_default?
+    @is_loaded_from_default
   end
 end
 
@@ -35,7 +42,7 @@ class CMS
     @cms["uri"]
   end
 
-  def is_public
+  def is_public?
     @cms["public"]
   end
 
