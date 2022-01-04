@@ -17,18 +17,12 @@ end
 
 class CheckCommit
   def check(commit_file)
-
     puts "Checking Commit Message in (#{commit_file})"
     message = GitCommitMessageAdapter.message_from_file(commit_file)
-    content = File.readlines commit_file
-    if rating_found?(content)
-      score = strip_score_from_subject(content[0])
-      config = JoyConfig.new()
-      write_to_scores_file(config.score_file_name, content[0], score)
-      File.write(commit_file, content.join("\n"))
-      return ExitCodes.success
-    end
-    abort "Commit rejected: Message #{content} does not contain a rating between 0 and 5."
+    config = JoyConfig.new()
+    write_to_scores_file(config.score_file_name, message.subject, message.score)
+    File.write(commit_file, message.body)
+    return ExitCodes.success
   end
 
   private
@@ -39,18 +33,7 @@ class CheckCommit
     out_file.close
   end
 
-  def strip_score_from_subject(subject)
-    score = subject.scan(/-(\d)-/).first[0].to_i
-    subject.slice!("-#{score}- ")
-    return score
-  end
-
-  def rating_found?(content)
-    content.grep(/\-[0-5]\-/).any?
-  end
-
 end
-
 
 if file_arg
   check = CheckCommit.new
