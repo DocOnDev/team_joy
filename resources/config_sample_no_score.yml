@@ -1,0 +1,4 @@
+cms:
+  uri: https://some.graphcms.com/version/key/branch
+  public: false
+  token: SomeToken

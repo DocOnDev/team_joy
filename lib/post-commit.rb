@@ -15,16 +15,16 @@ graph_cms = GraphCMS.new(gitCommit)
 
 @config = YAML.load_file("#{dirname}/joy_config.yml")
 
-uri = URI.parse(@config['cms']['uri'])
+cms_uri = URI.parse(@config['cms']['uri'])
 
-@request = Net::HTTP::Post.new(uri)
+@request = Net::HTTP::Post.new(cms_uri)
 @request["Accept"] = "application/json"
 @request["Authorization"] = "Bearer " + @config['cms']['token'] unless @config['cms']['public']
-req_options = { use_ssl: uri.scheme == "https", }
+req_options = { use_ssl: cms_uri.scheme == "https", }
 
 @request.body = JSON.dump({"query" => graph_cms.query})
 
-response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+response = Net::HTTP.start(cms_uri.hostname, cms_uri.port, req_options) do |http|
   http.request(@request)
 end
 
