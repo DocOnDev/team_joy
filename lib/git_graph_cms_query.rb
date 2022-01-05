@@ -2,7 +2,7 @@ require_relative 'commit_query'
 require_relative 'author_query'
 require_relative 'git_commit'
 
-class GraphCmsQuery
+class GitGraphCmsQuery
   def initialize(git_commit=GitCommit.new)
     @git_commit = git_commit
   end

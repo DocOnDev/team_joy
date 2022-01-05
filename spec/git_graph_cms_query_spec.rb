@@ -1,11 +1,11 @@
 require_relative 'spec_utils.rb'
 require 'rspec'
-require './lib/graph_cms_query'
+require './lib/git_graph_cms_query'
 
 mock_hash = SpecUtils::MockResponse.commit_hash
 
 
-describe 'GraphCmsQuery' do
+describe 'GitGraphCmsQuery' do
   let(:git_dbl){double(GitCommit)}
 
   before(:each) do
@@ -18,7 +18,7 @@ describe 'GraphCmsQuery' do
     allow(git_dbl).to receive(:committer_email).and_return(SpecUtils::MockResponse.committer_email)
     allow(git_dbl).to receive(:committer_name).and_return(SpecUtils::MockResponse.committer_name)
     allow(git_dbl).to receive(:files).and_return(SpecUtils::MockResponse.files)
-    @graph_query = GraphCmsQuery.new(git_dbl)
+    @graph_query = GitGraphCmsQuery.new(git_dbl)
   end
 
   describe 'query' do
