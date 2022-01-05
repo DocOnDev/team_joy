@@ -8,6 +8,13 @@ require_relative 'joy_config'
 require_relative 'git_commit'
 require_relative 'graph_cms'
 
+def formulate_query()
+  git_commit = GitCommit.new
+  git_commit.score_file = config.score_file_name
+  graph_cms = GraphCMS.new(git_commit)
+  query = graph_cms.query
+end
+
 config = JoyConfig.new()
 
 cms_uri = URI.parse(config.cms_uri)
@@ -17,13 +24,8 @@ cms_uri = URI.parse(config.cms_uri)
 @request["Authorization"] = "Bearer " + config.cms_token unless config.is_cms_public?
 req_options = { use_ssl: cms_uri.scheme == "https", }
 
-gitCommit = GitCommit.new
-gitCommit.score_file = config.score_file_name
-graph_cms = GraphCMS.new(gitCommit)
 
-query = graph_cms.query
-
-@request.body = JSON.dump({"query" => query})
+@request.body = JSON.dump({"query" => formulate_query})
 
 response = Net::HTTP.start(cms_uri.hostname, cms_uri.port, req_options) do |http|
   http.request(@request)
