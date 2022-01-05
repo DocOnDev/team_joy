@@ -1,5 +1,6 @@
 require_relative 'commit_query'
 require_relative 'author_query'
+require_relative 'git_commit'
 
 class GraphCmsQuery
   def initialize(git_commit=GitCommit.new)
