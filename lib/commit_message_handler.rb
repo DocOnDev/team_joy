@@ -2,8 +2,6 @@ require_relative 'git_commit-msg_adapter'
 require_relative 'commit_score_writer'
 require_relative 'commit_message_writer'
 
-file_arg = ARGV[0]
-
 class ExitCodes
   def self.fail
     1
