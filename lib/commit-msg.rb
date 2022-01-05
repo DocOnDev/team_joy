@@ -1,9 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'joy_config'
 require_relative 'git_commit-msg_adapter'
-require_relative 'commit_message_writer'
 require_relative 'commit_score_writer'
+require_relative 'commit_message_writer'
 
 file_arg = ARGV[0]
 
@@ -17,9 +16,9 @@ class ExitCodes
   end
 end
 
-class CheckCommit
+class CommitMessageHandler
 
-  def self.check(commit_message_file)
+  def self.execute(commit_message_file)
     puts "Checking Commit Message in (#{commit_message_file})"
     message = GitCommitMessageAdapter.message_from_file(commit_message_file)
     write_score_file(message)
@@ -38,5 +37,5 @@ class CheckCommit
 end
 
 if file_arg
-  CheckCommit.check(file_arg)
+  CommitMessageHandler.execute(file_arg)
 end
