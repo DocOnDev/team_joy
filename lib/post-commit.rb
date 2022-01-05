@@ -26,6 +26,8 @@ class GraphCmsRequestor
       http.request(request)
     end
 
+    return response
+
   end
 
 end
@@ -36,6 +38,6 @@ def formulate_query()
   query = graph_query.query
 end
 
-GraphCmsRequestor.execute(formulate_query)
+response = GraphCmsRequestor.execute(formulate_query)
 puts response.code
 puts response.body
