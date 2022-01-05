@@ -19,10 +19,11 @@ req_options = { use_ssl: cms_uri.scheme == "https", }
 
 gitCommit = GitCommit.new
 gitCommit.score_file = config.score_file_name
-
 graph_cms = GraphCMS.new(gitCommit)
 
-@request.body = JSON.dump({"query" => graph_cms.query})
+query = graph_cms.query
+
+@request.body = JSON.dump({"query" => query})
 
 response = Net::HTTP.start(cms_uri.hostname, cms_uri.port, req_options) do |http|
   http.request(@request)
