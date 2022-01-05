@@ -10,7 +10,22 @@ require_relative 'graph_cms_query'
 
 class GraphCmsRequestor
 
-  def execute(query)
+  def self.execute(query)
+    config = JoyConfig.new()
+
+    cms_uri = URI.parse(config.cms_uri)
+
+    request = Net::HTTP::Post.new(cms_uri)
+    request["Accept"] = "application/json"
+    request["Authorization"] = "Bearer " + config.cms_token unless config.is_cms_public?
+    req_options = { use_ssl: cms_uri.scheme == "https", }
+
+    request.body = JSON.dump({"query" => query})
+
+    response = Net::HTTP.start(cms_uri.hostname, cms_uri.port, req_options) do |http|
+      http.request(request)
+    end
+
   end
 
 end
@@ -21,21 +36,6 @@ def formulate_query()
   query = graph_query.query
 end
 
-@config = JoyConfig.new()
-
-cms_uri = URI.parse(@config.cms_uri)
-
-@request = Net::HTTP::Post.new(cms_uri)
-@request["Accept"] = "application/json"
-@request["Authorization"] = "Bearer " + @config.cms_token unless @config.is_cms_public?
-req_options = { use_ssl: cms_uri.scheme == "https", }
-
-
-@request.body = JSON.dump({"query" => formulate_query})
-
-response = Net::HTTP.start(cms_uri.hostname, cms_uri.port, req_options) do |http|
-  http.request(@request)
-end
-
+GraphCmsRequestor.execute(formulate_query)
 puts response.code
 puts response.body
