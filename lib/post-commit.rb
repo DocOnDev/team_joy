@@ -8,8 +8,6 @@ require_relative 'joy_config'
 require_relative 'git_commit'
 require_relative 'graph_cms'
 
-dirname = File.expand_path(File.dirname(__FILE__))
-
 config = JoyConfig.new()
 
 gitCommit = GitCommit.new
