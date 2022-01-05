@@ -10,17 +10,17 @@ require_relative 'graph_cms'
 
 config = JoyConfig.new()
 
-gitCommit = GitCommit.new
-gitCommit.score_file = config.score_file_name
-
-graph_cms = GraphCMS.new(gitCommit)
-
 cms_uri = URI.parse(config.cms_uri)
 
 @request = Net::HTTP::Post.new(cms_uri)
 @request["Accept"] = "application/json"
 @request["Authorization"] = "Bearer " + config.cms_token unless config.is_cms_public?
 req_options = { use_ssl: cms_uri.scheme == "https", }
+
+gitCommit = GitCommit.new
+gitCommit.score_file = config.score_file_name
+
+graph_cms = GraphCMS.new(gitCommit)
 
 @request.body = JSON.dump({"query" => graph_cms.query})
 
