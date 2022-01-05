@@ -10,11 +10,13 @@ require_relative 'graph_cms_query'
 
 class GraphCmsRequestor
 
+  def execute(query)
+  end
+
 end
 
 def formulate_query()
   git_commit = GitCommit.new
-  git_commit.score_file = @config.score_file_name
   graph_query = GraphCmsQuery.new(git_commit)
   query = graph_query.query
 end
