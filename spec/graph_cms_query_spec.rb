@@ -21,12 +21,6 @@ describe 'GraphCmsQuery' do
     @graph_query = GraphCmsQuery.new(git_dbl)
   end
 
-  context 'Without Commit Object' do
-    it 'should raise an error' do
-      expect {GraphCmsQuery.new()}.to raise_error(ArgumentError)
-    end
-  end
-
   describe 'query' do
     context 'missing a commit hash' do
       it 'should raise an error' do

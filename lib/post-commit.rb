@@ -1,15 +1,12 @@
 #!/usr/bin/env ruby
 
-require_relative 'git_commit'
 require_relative 'graph_cms_query'
 require_relative 'graph_cms_requestor'
 
-def formulate_query()
-  git_commit = GitCommit.new
-  graph_query = GraphCmsQuery.new(git_commit)
-  query = graph_query.query
-end
+graph_query = GraphCmsQuery.new()
+query = graph_query.query
 
-response = GraphCmsRequestor.execute(formulate_query)
+response = GraphCmsRequestor.execute(query)
+
 puts response.code
 puts response.body
