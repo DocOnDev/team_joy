@@ -50,7 +50,7 @@ module SpecUtils
 
     def self.raw_files
       "lib/git_commit.rb
-      lib/graph_cms.rb
+      lib/graph_query.rb
       spec/git_commit_spec.rb
       "
     end

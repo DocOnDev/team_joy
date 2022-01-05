@@ -6,13 +6,17 @@ require 'json'
 require 'yaml'
 require_relative 'joy_config'
 require_relative 'git_commit'
-require_relative 'graph_cms'
+require_relative 'graph_cms_query'
+
+class GraphCmsRequestor
+
+end
 
 def formulate_query()
   git_commit = GitCommit.new
   git_commit.score_file = @config.score_file_name
-  graph_cms = GraphCMS.new(git_commit)
-  query = graph_cms.query
+  graph_query = GraphCmsQuery.new(git_commit)
+  query = graph_query.query
 end
 
 @config = JoyConfig.new()

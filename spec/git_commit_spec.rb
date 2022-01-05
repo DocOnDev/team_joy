@@ -3,7 +3,7 @@ require './lib/git_commit'
 
 mock_log_response = '{"id":"80b0f9e8f0062c2ccee0ad246a2a983230122cf6","shortId":"80b0f9e","authorName":"'+SpecUtils::MockResponse.committer_name+'","committerName":"'+SpecUtils::MockResponse.committer_name+'","committerEmail":"'+SpecUtils::MockResponse.committer_email+'","subject":"Highly rated commit.","body":""}'
 mock_files_response = "lib/git_commit.rb
-lib/graph_cms.rb
+lib/graph_query.rb
 spec/git_commit_spec.rb
 "
 
