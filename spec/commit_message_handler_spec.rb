@@ -1,6 +1,6 @@
 require_relative 'spec_utils.rb'
 require 'rspec'
-require './lib/commit-msg'
+require './lib/commit_message_handler'
 
 describe 'Commit Message Handler' do
   let(:preserve_file) {SpecUtils::Resource.file("PassingWith3.txt")}
