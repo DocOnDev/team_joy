@@ -48,11 +48,15 @@ module SpecUtils
       3
     end
 
+    def self.commit_hash
+      "80b0f9e8f0062c2ccee0ad246a2a983230122cf6"
+    end
+
     def self.raw_files
       "lib/git_commit.rb
-      lib/graph_query.rb
-      spec/git_commit_spec.rb
-      "
+lib/graph_query.rb
+spec/git_commit_spec.rb
+"
     end
 
     def self.files
