@@ -7,6 +7,7 @@ require_relative 'graph_cms_requestor'
 commit = GitCommitAdapter.transform_commit
 
 # Pass commit to CommitSaveQuery object
+
 # Pass CommitSaveQuery.graph_cms_query to GraphCmsRequestor
 
 git_graph_query = GitGraphCmsQuery.new()
