@@ -1,4 +1,5 @@
 require_relative 'commit'
+require_relative 'git_commit'
 require_relative 'author'
 
 class GitCommitAdapter
