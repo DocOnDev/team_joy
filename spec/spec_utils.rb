@@ -40,6 +40,10 @@ module SpecUtils
       "git@github.com:DocOnDev/team_joy.git"
     end
 
+    def self.https_location
+      "https://github.com/DocOnDev/team_joy"
+    end
+
     def self.branch_name
       "mock-branch"
     end

@@ -13,6 +13,7 @@ describe 'Git Commit Adapter' do
     allow(git_commit_dbl).to receive(:branch_name).and_return(SpecUtils::MockResponse.branch_name)
     allow(git_commit_dbl).to receive(:committer_name).and_return(SpecUtils::MockResponse.committer_name)
     allow(git_commit_dbl).to receive(:committer_email).and_return(SpecUtils::MockResponse.committer_email)
+    allow(git_commit_dbl).to receive(:https_location).and_return(SpecUtils::MockResponse.https_location)
 
     @commit = GitCommitAdapter.transform_commit(git_commit_dbl)
   end

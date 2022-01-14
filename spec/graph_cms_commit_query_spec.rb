@@ -14,7 +14,7 @@ describe 'GraphCmsCommitQuery' do
     allow(commit_dbl).to receive(:subject).and_return(SpecUtils::MockResponse.commit_message)
     allow(commit_dbl).to receive(:body).and_return(SpecUtils::MockResponse.body)
     allow(commit_dbl).to receive(:branch_name).and_return(SpecUtils::MockResponse.branch_name)
-    allow(commit_dbl).to receive(:https_location).and_return(SpecUtils::MockResponse.repo_location)
+    allow(commit_dbl).to receive(:uri).and_return(SpecUtils::MockResponse.https_location)
     allow(commit_dbl).to receive(:author).and_return(author_dbl)
     allow(commit_dbl).to receive(:files).and_return(SpecUtils::MockResponse.files)
 
@@ -59,7 +59,7 @@ describe 'GraphCmsCommitQuery' do
       end
 
       it 'should have a repo' do
-        expect(@commitQuery.create).to include "uri: \"#{SpecUtils::MockResponse.repo_location}"
+        expect(@commitQuery.create).to include "uri: \"#{SpecUtils::MockResponse.https_location}"
       end
 
       it 'should have an author' do
