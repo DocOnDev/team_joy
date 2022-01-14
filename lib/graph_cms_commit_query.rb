@@ -16,7 +16,7 @@ class GraphCmsCommitQuery
       branch: "' + @commit.branch_name + '"
       committedFiles: ' + (@commit.files).to_s + '
       repository: {
-        connect: { uri: "' + @commit.https_location + '"}
+        connect: { uri: "' + @commit.uri + '"}
       }
       authors: {
         connect: { email: "' + author.email + '" }

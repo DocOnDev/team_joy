@@ -12,6 +12,7 @@ class GitCommitAdapter
     commit.branch_name = git_commit.branch_name
     commit.files = git_commit.files.to_s
     commit.author = Author.new(git_commit.committer_name, git_commit.committer_email)
+    commit.uri = git_commit.https_location
 
     return commit
   end
