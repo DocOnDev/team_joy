@@ -6,6 +6,7 @@ mock_hash = SpecUtils::MockResponse.commit_hash
 
 describe 'GraphCmsCommitQuery' do
   let(:commit_dbl){double(Commit)}
+  let(:author_dbl){double(Author)}
 
   before(:each) do
     allow(commit_dbl).to receive(:id).and_return(mock_hash)
@@ -14,8 +15,12 @@ describe 'GraphCmsCommitQuery' do
     allow(commit_dbl).to receive(:body).and_return(SpecUtils::MockResponse.body)
     allow(commit_dbl).to receive(:branch_name).and_return(SpecUtils::MockResponse.branch_name)
     allow(commit_dbl).to receive(:https_location).and_return(SpecUtils::MockResponse.repo_location)
-    allow(commit_dbl).to receive(:committer_email).and_return(SpecUtils::MockResponse.committer_email)
+    allow(commit_dbl).to receive(:author).and_return(author_dbl)
     allow(commit_dbl).to receive(:files).and_return(SpecUtils::MockResponse.files)
+
+    allow(author_dbl).to receive(:email).and_return(SpecUtils::MockResponse.committer_email)
+    allow(author_dbl).to receive(:name).and_return(SpecUtils::MockResponse.committer_name)
+
     @commitQuery = GraphCmsCommitQuery.new(commit_dbl)
   end
 

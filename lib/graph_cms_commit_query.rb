@@ -6,6 +6,8 @@ class GraphCmsCommitQuery
   def create
     raise "Cannot record a commit without a commit id" unless @commit.id
 
+    author = @commit.author
+
     'createCommit (data: {
       repoCommitId: "' + @commit.id + '"
       subject: "' + @commit.subject + '"
@@ -17,7 +19,7 @@ class GraphCmsCommitQuery
         connect: { uri: "' + @commit.https_location + '"}
       }
       authors: {
-        connect: { email: "' + @commit.committer_email + '" }
+        connect: { email: "' + author.email + '" }
       }
     }) { id }'
   end
