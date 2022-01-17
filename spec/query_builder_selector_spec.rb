@@ -1,7 +1,7 @@
 require 'rspec'
 require './lib/query_builder_selector'
 
-describe 'Query Selector' do
+describe 'Query Builder Selector' do
 
   describe 'build' do
     context "Default (GraphCms)" do
