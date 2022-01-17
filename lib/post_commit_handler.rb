@@ -9,13 +9,13 @@ class PostCommitHandler
     query_requestor = QueryRequestorSelector.select
     query_builder = QueryBuilderSelector.select
 
-    # Given this is a Git Hook, we use the Git Commit Adapter
+    # Given this is called from a Git Hook, we use the Git Commit Adapter
     commit = GitCommitAdapter.transform_commit
 
     response = query_requestor.execute(query_builder.create_commit(commit))
 
-    puts response.code
-    puts response.body
-
+    # puts response.code
+    # puts response.body
+    #
   end
 end
