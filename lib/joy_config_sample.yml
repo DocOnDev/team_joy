@@ -1,6 +1,6 @@
 cms:
-  uri: https://api-us-east-1.graphcms.com/v2/ckvjz9zck625301z063hx5rlj/master
-  public: false
-  token: YourTokenGoesHere
+  uri: https://some.graphcms.com/version/key/branch
+  public: true
+  token: SomeToken
 score-file:
-  path: ./TJ_SCORES
+  path: ./score_file
