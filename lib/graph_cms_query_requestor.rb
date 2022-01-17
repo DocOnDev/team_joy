@@ -4,9 +4,9 @@ require 'json'
 require 'yaml'
 require_relative 'joy_config'
 
-class GraphCmsRequestor
+class GraphCmsQueryRequestor
 
-  def self.execute(query)
+  def execute(query)
     config = JoyConfig.new()
 
     cms_uri = URI.parse(config.cms_uri)
