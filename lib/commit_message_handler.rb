@@ -17,13 +17,10 @@ class CommitMessageHandler
   def self.execute(commit_message_file)
     puts "Checking Commit Message in (#{commit_message_file})"
     message = GitCommitMessageAdapter.message_from_file(commit_message_file)
-    write_score_file(message)
+
+    CommitScoreWriter.write(message)
     overwrite_commit_message_file(commit_message_file, message)
     return ExitCodes.success
-  end
-
-  def self.write_score_file(message)
-    CommitScoreWriter.write(message)
   end
 
   def self.overwrite_commit_message_file(file, message)
