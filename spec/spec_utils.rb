@@ -26,6 +26,10 @@ module SpecUtils
       "Stubbed Commit Hash " + rand(10..1000).to_s
     end
 
+    def self.commit_score
+      3
+    end
+
     def self.commit_message
       "Running Specs"
     end
