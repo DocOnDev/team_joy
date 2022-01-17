@@ -11,6 +11,10 @@ class JoyConfig
     @score_file = ScoreFile.new(@config["score-file"])
   end
 
+  def cms_type
+    @cms.type
+  end
+
   def cms_uri
     @cms.uri
   end
@@ -36,6 +40,10 @@ class CMS
   def initialize(config_entry)
     raise ArgumentError.new("Missing CMS Data") unless config_entry
     @cms = config_entry
+  end
+
+  def type
+    @cms["type"]
   end
 
   def uri

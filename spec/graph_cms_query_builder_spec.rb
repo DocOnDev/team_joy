@@ -1,8 +1,8 @@
 require_relative 'spec_utils.rb'
 require 'rspec'
-require './lib/graph_cms_query'
+require './lib/graph_cms_query_builder'
 
-describe 'GraphCmsQuery' do
+describe 'GraphCmsQueryBuilder' do
   let(:commit_dbl){double(Commit)}
   let(:author_dbl){double(Author)}
 
@@ -19,7 +19,7 @@ describe 'GraphCmsQuery' do
     allow(author_dbl).to receive(:email).and_return(SpecUtils::MockResponse.committer_email)
     allow(author_dbl).to receive(:name).and_return(SpecUtils::MockResponse.committer_name)
 
-    @graph_query = GraphCmsQuery.new
+    @graph_query = GraphCmsQueryBuilder.new
   end
 
   describe 'create_commit' do

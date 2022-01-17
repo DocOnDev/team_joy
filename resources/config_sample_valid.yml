@@ -1,4 +1,5 @@
 cms:
+  type: GraphCms
   uri: https://some.graphcms.com/version/key/branch
   public: true
   token: SomeToken
