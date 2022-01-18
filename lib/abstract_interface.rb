@@ -20,13 +20,12 @@ module AbstractInterface
   end
 
   module ClassMethods
-  def needs_implementation(name, *args)
-    self.class_eval do
-      define_method(name) do |*args|
-        self.class.api_not_implemented(self, name)
+    def needs_implementation(name, *args)
+      self.class_eval do
+        define_method(name) do |*args|
+          self.class.api_not_implemented(self, name)
+        end
       end
     end
   end
-end
-
 end
