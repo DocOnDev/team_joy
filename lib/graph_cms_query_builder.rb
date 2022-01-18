@@ -1,7 +1,8 @@
+require_relative 'query_builder'
 require_relative 'graph_cms_commit_query'
 require_relative 'graph_cms_author_query'
 
-class GraphCmsQueryBuilder
+class GraphCmsQueryBuilder < QueryBuilder
 
   def create_commit(commit)
     commit_query = GraphCmsCommitQuery.new commit
