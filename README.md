@@ -5,6 +5,8 @@ The commit-msg hook will reject commits that do not have a quality rating
 
 The post-update hook will push the accepted commit to the developer view database
 
+Contact Doc Norton if you want your open source project added to [Code Joy](https://www.code-joy.app).
+
 ## Install
 ### Standard install
 
