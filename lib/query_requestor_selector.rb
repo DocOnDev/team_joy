@@ -1,3 +1,5 @@
+require_relative 'joy_config'
+
 Dir.glob(File.expand_path("./*_query_requestor.rb", File.dirname(__FILE__))).each do |file|
   require file
 end
