@@ -1,4 +1,4 @@
-class CommitMessageWriter
+class GitCommitMessageWriter
   def initialize(message)
     @message = message
   end

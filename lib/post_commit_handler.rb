@@ -2,7 +2,7 @@ require_relative 'query_requestor_selector'
 require_relative 'query_builder_selector'
 require_relative 'git_commit_adapter'
 
-class PostCommitHandler
+class GitPostCommitHandler
 
   def self.execute
     # Requestor and Builder are from configurable factory

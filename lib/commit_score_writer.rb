@@ -1,6 +1,6 @@
 require_relative 'joy_config'
 
-class CommitScoreWriter
+class GitCommitScoreWriter
   def self.write(message)
     config = JoyConfig.new
     out_file = File.new(config.score_file_name, "w")
