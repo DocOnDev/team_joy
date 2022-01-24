@@ -13,9 +13,5 @@ class PostCommitHandler
     commit = GitCommitAdapter.transform_commit
 
     response = query_requestor.execute(query_builder.create_commit(commit))
-
-    # puts response.code
-    # puts response.body
-    #
   end
 end
