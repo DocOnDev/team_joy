@@ -6,17 +6,16 @@ describe 'Commit Message Handler' do
   let(:preserve_file) {SpecUtils::Resource.file("PassingWith3.txt")}
   let(:commit_file_name) {SpecUtils::Resource.file("PassingWith3.txt2")}
 
-  # it 'should tell me the file name' do
-  #   output = SpecUtils::Capture.stdout { GitCommitMessageHandler.execute commit_file_name }
-  #   expect(output).to include "(#{commit_file_name})"
-  # end
-  #
-
   context 'given file content does contain commit pattern' do
     before(:each) do
       FileUtils.copy(preserve_file, commit_file_name)
       config = JoyConfig.new()
       @score_file_name = config.score_file_name
+    end
+
+    it 'should tell me the file name' do
+      output = SpecUtils::Capture.stdout { GitCommitMessageHandler.execute commit_file_name }
+      expect(output).to include "(#{commit_file_name})"
     end
 
     it 'should succeed' do
