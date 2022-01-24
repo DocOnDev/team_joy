@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
-require_relative 'post_commit_handler'
+require_relative 'git_post_commit_handler'
 
 GitPostCommitHandler.execute

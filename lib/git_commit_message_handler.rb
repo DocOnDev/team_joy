@@ -1,6 +1,6 @@
 require_relative 'git_commit-msg_adapter'
-require_relative 'commit_score_writer'
-require_relative 'commit_message_writer'
+require_relative 'git_commit_score_writer'
+require_relative 'git_commit_message_writer'
 
 class ExitCodes
   def self.fail

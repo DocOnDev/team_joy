@@ -1,6 +1,6 @@
 require_relative 'spec_utils.rb'
 require 'rspec'
-require './lib/commit_message_writer'
+require './lib/git_commit_message_writer'
 require './lib/commit_message'
 
 COMMIT_MESSAGE_FILE = File.expand_path(File.dirname(__FILE__)) + "/COMMIT_MSG_FILE"

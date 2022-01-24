@@ -1,6 +1,6 @@
 require_relative 'spec_utils.rb'
 require 'rspec'
-require './lib/commit_score_writer'
+require './lib/git_commit_score_writer'
 require './lib/joy_config'
 
 SUBJECT = "This is the subject line without a body"

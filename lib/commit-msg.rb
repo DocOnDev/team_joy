@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require_relative 'commit_message_handler'
+require_relative 'git_commit_message_handler'
 
 file_arg = ARGV[0]
 
