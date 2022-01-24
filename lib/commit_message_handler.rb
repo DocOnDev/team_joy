@@ -12,19 +12,19 @@ class ExitCodes
   end
 end
 
-class CommitMessageHandler
+class GitCommitMessageHandler
 
   def self.execute(commit_message_file)
     puts "Checking Commit Message in (#{commit_message_file})"
     message = GitCommitMessageAdapter.message_from_file(commit_message_file)
 
-    CommitScoreWriter.write(message)
+    GitCommitScoreWriter.write(message)
     overwrite_commit_message_file(commit_message_file, message)
     return ExitCodes.success
   end
 
   def self.overwrite_commit_message_file(file, message)
-    message_writer = CommitMessageWriter.new(message)
+    message_writer = GitCommitMessageWriter.new(message)
     message_writer.write_to_file(file)
   end
 end

@@ -9,7 +9,7 @@ SCORE = 5
 describe 'Commit Score Writer' do
   context 'given no commit message' do
     it 'should throw an argument error' do
-      expect {CommitScoreWriter.write}.to raise_error(ArgumentError)
+      expect {GitCommitScoreWriter.write}.to raise_error(ArgumentError)
     end
   end
 
@@ -21,7 +21,7 @@ describe 'Commit Score Writer' do
     end
 
     it 'should write a subject and score' do
-      CommitScoreWriter.write(@message)
+      GitCommitScoreWriter.write(@message)
       expect(get_scores[SUBJECT]).to eq(SCORE)
     end
   end

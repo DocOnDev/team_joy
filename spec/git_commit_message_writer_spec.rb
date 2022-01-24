@@ -9,12 +9,12 @@ BODY = "This is the body line one.\nThis is the body line two."
 describe 'Commit Message Writer' do
   context 'given no commit message' do
     it 'should throw an argument error' do
-      expect {CommitMessageWriter.new}.to raise_error(ArgumentError)
+      expect {GitCommitMessageWriter.new}.to raise_error(ArgumentError)
     end
   end
 
   context 'given a commit message with a subject and body' do
-    let(:writer){CommitMessageWriter.new(@message)}
+    let(:writer){GitCommitMessageWriter.new(@message)}
 
     before(:each) do
       @message = CommitMessage.new
@@ -36,7 +36,7 @@ describe 'Commit Message Writer' do
   end
 
   context 'given a commit message with only a subject' do
-    let(:writer){CommitMessageWriter.new(@message)}
+    let(:writer){GitCommitMessageWriter.new(@message)}
 
     before(:each) do
       @message = CommitMessage.new
