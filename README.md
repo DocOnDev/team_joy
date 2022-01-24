@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/c03b02ca384c12616a7c/maintainability)](https://codeclimate.com/github/DocOnDev/team_joy/maintainability)
+
 # Code Joy
 Example of git hooks for measuring code joy
 
