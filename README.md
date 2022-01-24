@@ -1,4 +1,5 @@
-# Code Joy
+# Code Joy [![Maintainability](https://api.codeclimate.com/v1/badges/c03b02ca384c12616a7c/maintainability)](https://codeclimate.com/github/DocOnDev/team_joy/maintainability)
+
 Example of git hooks for measuring code joy
 
 The commit-msg hook will reject commits that do not have a quality rating
