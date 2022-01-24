@@ -13,6 +13,8 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
+      - ruby/install:
+          version: '2.6'
       - ruby/install-deps
       - ruby/rspec-test
 
