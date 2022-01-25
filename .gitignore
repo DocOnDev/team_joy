@@ -4,3 +4,4 @@
 deploy_post.sh
 COMMIT_MSG_FILE
 /coverage
+TEMP_SCORE

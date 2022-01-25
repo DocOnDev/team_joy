@@ -1,7 +1,7 @@
 require 'rspec'
 require './lib/git_commit'
 
-mock_log_response = '{"id":"'+SpecUtils::MockResponse.commit_hash+'","shortId":"80b0f9e","authorName":"'+SpecUtils::MockResponse.committer_name+'","committerName":"'+SpecUtils::MockResponse.committer_name+'","committerEmail":"'+SpecUtils::MockResponse.committer_email+'","subject":"Highly rated commit.","body":""}'
+mock_log_response = '{"id":"'+SpecUtils::MockResponse.commit_hash+'","shortId":"80b0f9e","authorName":"'+SpecUtils::MockResponse.committer_name+'","committerName":"'+SpecUtils::MockResponse.committer_name+'","committerEmail":"'+SpecUtils::MockResponse.committer_email+'","subject":"'+SpecUtils::MockResponse.commit_message+'","body":""}'
 mock_files_response = "lib/git_commit.rb
 lib/graph_query.rb
 spec/git_commit_spec.rb
@@ -23,6 +23,15 @@ describe 'Git Commit' do
 
   it 'should have a commit hash' do
     expect(commit.commit_hash).not_to be_nil
+  end
+
+  it 'should have a score' do
+    score_file_name = "TEMP_SCORE"
+    File.write(score_file_name, '{"'+SpecUtils::MockResponse.commit_message+'":'+SpecUtils::MockResponse.score.to_s+'}')
+    commit.score_file = score_file_name
+    score = commit.score
+    expect(score).to be_a(Integer)
+    expect(score).to eq(SpecUtils::MockResponse.score)
   end
 
   it 'should have a branch name' do
