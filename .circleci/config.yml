@@ -9,6 +9,8 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   run-tests:
+    environment:
+      CC_TEST_REPORTER_ID: b344a55fe1dce6068c0a655afea7c452c67f25a38551fbfe9ba326959c6038a4
     docker:
       - image: cimg/base:stable
     steps:
@@ -30,7 +32,7 @@ jobs:
           command: bundle exec rspec
       - run:
           name: report cc test reporter
-          command: ./cc-test-reporter after-build
+          command: ./cc-test-reporter after-build -t simplecov
 
 
 
