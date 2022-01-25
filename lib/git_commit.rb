@@ -6,10 +6,6 @@ class GitCommit
     @commit_hash ||= log_details["id"]
   end
 
-  def short_commit_hash
-    @short_commit_hash ||= log_details["shortId"]
-  end
-
   def author_name
     @author_name ||= log_details["authorName"]
   end

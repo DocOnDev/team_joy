@@ -25,11 +25,6 @@ describe 'Git Commit' do
     expect(commit.commit_hash).not_to be_nil
   end
 
-  it 'should have a short commit hash' do
-    expect(commit.short_commit_hash).not_to be_nil
-    expect(commit.commit_hash).to include(commit.short_commit_hash)
-  end
-
   it 'should have a branch name' do
     expect(commit.branch_name).to eq(SpecUtils::MockResponse.branch_name)
   end
