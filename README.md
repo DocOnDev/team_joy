@@ -1,4 +1,4 @@
-# Code Joy [![CircleCI](https://circleci.com/gh/DocOnDev/team_joy/tree/main.svg?style=svg)](https://circleci.com/gh/DocOnDev/team_joy/tree/main) [![Maintainability](https://api.codeclimate.com/v1/badges/c03b02ca384c12616a7c/maintainability)](https://codeclimate.com/github/DocOnDev/team_joy/maintainability)
+# Code Joy [![CircleCI](https://circleci.com/gh/DocOnDev/team_joy/tree/main.svg?style=svg)](https://circleci.com/gh/DocOnDev/team_joy/tree/main) [![Maintainability](https://api.codeclimate.com/v1/badges/c03b02ca384c12616a7c/maintainability)](https://codeclimate.com/github/DocOnDev/team_joy/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/c03b02ca384c12616a7c/test_coverage)](https://codeclimate.com/github/DocOnDev/team_joy/test_coverage)
 
 Example of git hooks for measuring code joy
 
