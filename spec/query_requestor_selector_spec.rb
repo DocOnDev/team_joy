@@ -17,7 +17,7 @@ describe 'Query Requestor Selector' do
       let(:config) {JoyConfig.new(config_file)}
       let(:query_requestor){QueryRequestorSelector.with_config(config).select}
 
-      it 'should return a GraphCmsQueryBuilder object' do
+      it 'should return a GraphCmsQueryRequestor object' do
         expect(query_requestor).to be_a(GraphCmsQueryRequestor)
       end
     end
@@ -27,7 +27,7 @@ describe 'Query Requestor Selector' do
       let(:config) {JoyConfig.new(config_file)}
       let(:query_requestor){QueryRequestorSelector.with_config(config).select}
 
-      it 'should return a OracleQueryBuilder object' do
+      it 'should return a OracleQueryRequestor object' do
         expect(query_requestor).to be_a(OracleQueryRequestor)
       end
     end
