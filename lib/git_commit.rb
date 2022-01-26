@@ -88,8 +88,6 @@ class GitCommit
   def load_score
     file = File.read(score_file)
     scores = JSON.parse(file)
-    puts "***** SCORES: #{scores}"
-    puts "***** SUBJECT: #{subject}"
     scores[subject] || 0
   end
 
