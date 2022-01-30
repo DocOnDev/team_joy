@@ -1,16 +1,10 @@
-class Commit
-  attr_accessor :body, :score, :branch_name, :files, :uri, :author
-  attr_reader  :id, :subject
+require_relative 'code_helpers'
 
-  def id=(id)
-    abort "A commit id must be a String" unless id.is_a?(String)
-    @id = id
-  end
-
-  def subject=(subject)
-    abort "A subject must be a String" unless subject.is_a?(String)
-    @subject = subject
-  end
-
-
+class Commit < CodeHelpers::DataTypes
+  attr_accessor :files, :uri, :author
+  string_accessor :id
+  string_accessor :subject
+  string_accessor :body
+  string_accessor :branch_name
+  int_accessor :score
 end
