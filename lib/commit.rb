@@ -1,10 +1,8 @@
 require_relative 'code_helpers'
+require_relative 'author'
 
 class Commit < CodeHelpers::DataTypes
-  attr_accessor :files, :uri, :author
-  string_accessor :id
-  string_accessor :subject
-  string_accessor :body
-  string_accessor :branch_name
+  string_accessor :id, :subject, :body, :branch_name, :files, :uri
   int_accessor :score
+  type_accessor Author, :author
 end
