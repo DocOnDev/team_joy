@@ -7,10 +7,7 @@ describe 'Commit Message' do
 
   context "Subject Property" do
     it 'should reject a non-String value' do
-      expect do
-        output = SpecUtils::Capture.stdout { commitMessage.subject = 42 }
-        expect(output).to include "A commit subject must be a String"
-      end.to raise_error(SystemExit)
+      expect{ commitMessage.subject = 42 }.to raise_error(ArgumentError, /must be of type String/)
     end
 
     it 'should accept a String value' do
@@ -21,24 +18,15 @@ describe 'Commit Message' do
 
   context "Score Property" do
     it 'should reject a non-Integer value' do
-      expect do
-        output = SpecUtils::Capture.stdout { commitMessage.score = "Big Score" }
-        expect(output).to include "A commit score must be an Integer"
-      end.to raise_error(SystemExit)
+      expect{ commitMessage.score = "Big Score" }.to raise_error(ArgumentError, /must be of type Integer/)
     end
 
     it 'should reject an Integer value less than 0' do
-      expect do
-        output = SpecUtils::Capture.stdout { commitMessage.score = -1 }
-        expect(output).to include "A commit score must be an Integer between 0 and 5"
-      end.to raise_error(SystemExit)
+      expect{ commitMessage.score = -1 }.to raise_error(ArgumentError, /between 0 and 5/)
     end
 
     it 'should reject an Integer value greater than 5' do
-      expect do
-        output = SpecUtils::Capture.stdout { commitMessage.score = 6 }
-        expect(output).to include "A commit score must be an Integer between 0 and 5"
-      end.to raise_error(SystemExit)
+      expect{ commitMessage.score = 6 }.to raise_error(ArgumentError, /between 0 and 5/)
     end
 
     it 'should accept an Integer value between 0 and 5' do
@@ -49,10 +37,7 @@ describe 'Commit Message' do
 
   context "Body Property" do
     it 'should reject a non-String value' do
-      expect do
-        output = SpecUtils::Capture.stdout { commitMessage.body = [6] }
-        expect(output).to include "A commit body must be a String"
-      end.to raise_error(SystemExit)
+      expect{ commitMessage.body = [6] }.to raise_error(ArgumentError, /must be of type String/)
     end
 
     it 'should accept a String value' do

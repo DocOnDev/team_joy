@@ -51,14 +51,14 @@ describe 'Commit Message Handler' do
   context 'file content does NOT contain commit pattern' do
     it 'should fail' do
       commit_file_name = SpecUtils::Resource.file("FailingMissing.txt")
-      expect { GitCommitMessageHandler.execute commit_file_name }.to raise_error(SystemExit, /between 0 and 5/)
+      expect { GitCommitMessageHandler.execute commit_file_name }.to raise_error(ArgumentError, /between 0 and 5/)
     end
   end
 
   context 'file content contains pattern with value over 5' do
     it 'should fail' do
       commit_file_name = SpecUtils::Resource.file("FailingWith6.txt")
-      expect { GitCommitMessageHandler.execute commit_file_name }.to raise_error(SystemExit, /between 0 and 5/)
+      expect { GitCommitMessageHandler.execute commit_file_name }.to raise_error(ArgumentError, /between 0 and 5/)
     end
   end
 
