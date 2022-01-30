@@ -22,8 +22,7 @@ class GitCommitMessageHandler
       GitCommitScoreWriter.write(message)
       overwrite_commit_message_file(commit_message_file, message)
     rescue StandardError => e
-       puts e.message
-       return ExitCodes.fail
+       abort "COMMIT REJECTED - #{e.message}"
     end
 
     return ExitCodes.success
