@@ -1,3 +1,10 @@
+# Include AbstractInterface to define required Methods
+
+# The below will require any class that implements the interface to implement a create_commit method
+#   include AbstractInterface
+#   needs_implementation :create_commit
+
+
 module AbstractInterface
 
   class InterfaceNotImplementedError < NoMethodError
