@@ -8,10 +8,16 @@ class FieldValidationsTest < CodeHelpers::FieldValidations
   int_range_accessor 0,5, :int_range, :int_range_two
   type_accessor Array, :array_field, :array_field_two
   email_accessor :email_field, :email_field_two
+  initialize_with :string_field, :int_field
+end
+
+class FieldValidationsBadInitTest < CodeHelpers::FieldValidations
+  string_accessor :string_one
+  initialize_with :string_two
 end
 
 describe 'CodeHelpers' do
-  let(:under_test){FieldValidationsTest.new}
+  let(:under_test){FieldValidationsTest.new("String", 22)}
 
   describe "type_accessor" do
     it 'should reject a value not of the designated type' do
@@ -65,6 +71,23 @@ describe 'CodeHelpers' do
     it 'should accept an Integer value within the range' do
       under_test.int_range_two = 4
       expect(under_test.int_range_two).to eq(4)
+    end
+  end
+
+  describe "initialize_with" do
+    let(:good_test){FieldValidationsTest.new("Initialized String", 22)}
+    let(:bad_test){FieldValidationsBadInitTest.new("Initialized String")}
+
+    context "accessors define before initialize_with" do
+      it 'should initialize with the proper values' do
+        expect( good_test.string_field ).to eq("Initialized String")
+      end
+    end
+
+    context "accessor not defined before initialize_with" do
+      it 'should raise an argument error' do
+        expect {bad_test.string_two}.to raise_error(ArgumentError, /must be declared with an accessor/)
+      end
     end
   end
 

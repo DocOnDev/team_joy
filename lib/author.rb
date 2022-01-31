@@ -3,11 +3,7 @@ require_relative 'code_helpers'
 class Author < CodeHelpers::FieldValidations
   string_accessor :name
   email_accessor :email
-
-  def initialize(name, email)
-    send("name=", name)
-    send("email=", email)
-  end
+  initialize_with :name, :email
 
   def ==(other)
     self.name  == other.name &&

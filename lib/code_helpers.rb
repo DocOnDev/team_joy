@@ -1,5 +1,14 @@
 module CodeHelpers
   class FieldValidations
+    def self.initialize_with(*field_names)
+      define_method("initialize") do |*arguments|
+        field_names.each_with_index do |field_name, index|
+          raise ArgumentError.new "Field must be declared with an accessor before being used in initialize_with" unless (self.respond_to?"#{field_name}=") 
+          send("#{field_name}=", arguments[index])
+        end
+      end
+    end
+
     def self.string_accessor(*field_names)
       type_accessor(String, *field_names)
     end
