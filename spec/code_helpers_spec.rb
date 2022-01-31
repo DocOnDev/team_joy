@@ -2,7 +2,7 @@ require_relative 'spec_utils.rb'
 require 'rspec'
 require './lib/code_helpers'
 
-class DataTypesTest < CodeHelpers::DataTypes
+class FieldValidationsTest < CodeHelpers::FieldValidations
   string_accessor :string_field, :string_field_two
   int_accessor :int_field, :int_field_two
   int_range_accessor 0,5, :int_range, :int_range_two
@@ -11,7 +11,7 @@ class DataTypesTest < CodeHelpers::DataTypes
 end
 
 describe 'CodeHelpers' do
-  let(:under_test){DataTypesTest.new}
+  let(:under_test){FieldValidationsTest.new}
 
   describe "type_accessor" do
     it 'should reject a value not of the designated type' do

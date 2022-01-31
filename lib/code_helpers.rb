@@ -1,5 +1,5 @@
 module CodeHelpers
-  class DataTypes
+  class FieldValidations
     def self.string_accessor(*field_names)
       type_accessor(String, *field_names)
     end
