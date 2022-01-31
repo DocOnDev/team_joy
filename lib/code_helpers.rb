@@ -9,10 +9,20 @@ module CodeHelpers
     end
 
     def self.int_range_accessor(low, high, *field_names)
-      type_accessor(Integer, *field_names)
+      int_accessor(*field_names)
       field_names.each do |field_name|
         define_method("#{field_name}_validation") do |argument|
           raise ArgumentError.new "A #{self.class.name} #{field_name} must be within the range #{low} - #{high}" unless argument.between?(low, high)
+        end
+      end
+    end
+
+    def self.email_accessor(*field_names)
+      string_accessor(*field_names)
+      field_names.each do |field_name|
+        define_method("#{field_name}_validation") do |argument|
+          email_format = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+          raise ArgumentError.new "A #{self.class.name} #{field_name} must be a valid email" if (argument =~ email_format).nil?
         end
       end
     end

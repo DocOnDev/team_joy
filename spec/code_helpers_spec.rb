@@ -7,6 +7,7 @@ class DataTypesTest < CodeHelpers::DataTypes
   int_accessor :int_field, :int_field_two
   int_range_accessor 0,5, :int_range, :int_range_two
   type_accessor Array, :array_field, :array_field_two
+  email_accessor :email_field, :email_field_two
 end
 
 describe 'CodeHelpers' do
@@ -31,6 +32,17 @@ describe 'CodeHelpers' do
     it 'should accept a String value' do
       under_test.string_field = "String Value"
       expect(under_test.string_field).to eq("String Value")
+    end
+  end
+
+  describe "email_accessor" do
+    it 'should reject a non-email value' do
+      expect { under_test.email_field_two = "41" }.to raise_error(ArgumentError, /must be a valid email/)
+    end
+
+    it 'should accept a String value' do
+      under_test.email_field = "me@domain.com"
+      expect(under_test.email_field).to eq("me@domain.com")
     end
   end
 
