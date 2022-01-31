@@ -5,8 +5,8 @@ class Author
 
   def initialize(name, email)
     validations(name, email)
-    @name = name.to_s
-    @email = email.to_s
+    @name = name
+    @email = email
   end
 
   def ==(other)
@@ -17,6 +17,8 @@ class Author
   private
 
   def validations(name, email)
-    raise StandardError, 'Email must have proper format.' if (email =~ EMAIL_FORMAT).nil?
+    raise ArgumentError, 'Name must be a String.' unless name.is_a?(String)
+    raise ArgumentError, 'Email must be a String.' unless email.is_a?(String)
+    raise ArgumentError, 'Email must have proper format.' if (email =~ EMAIL_FORMAT).nil?
   end
 end

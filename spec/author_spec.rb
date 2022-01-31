@@ -25,11 +25,19 @@ describe 'Author' do
         context 'when wrong data provided' do
 
             it 'should not create an Author when no email provided' do
-                expect{ Author.new(32, "") }.to raise_error StandardError
+                expect{ Author.new(32, "") }.to raise_error ArgumentError
             end
 
             it 'should not create an Author when wrong email format provided' do
-                expect{ Author.new(32, "invalid_email") }.to raise_error StandardError
+                expect{ Author.new(32, "invalid_email") }.to raise_error ArgumentError
+            end
+
+            it 'should not create an Author when email is not a String' do
+                expect{ Author.new('Name', 34)}.to raise_error ArgumentError
+            end
+
+            it 'should not create an Author when name is not a String' do
+                expect{ Author.new(32, "proper@email.com")}.to raise_error ArgumentError
             end
         end
     end
