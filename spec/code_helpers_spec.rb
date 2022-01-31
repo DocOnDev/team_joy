@@ -4,8 +4,9 @@ require './lib/code_helpers'
 
 class DataTypesTest < CodeHelpers::DataTypes
   string_accessor :string_field, :string_field_two
-  int_accessor :int_field
-  type_accessor Array, :array_field
+  int_accessor :int_field, :int_field_two
+  int_range_accessor 0,5, :int_range, :int_range_two
+  type_accessor Array, :array_field, :array_field_two
 end
 
 describe 'CodeHelpers' do
@@ -17,8 +18,8 @@ describe 'CodeHelpers' do
     end
 
     it 'should accept a value of the designated type' do
-      under_test.array_field = ["String Value"]
-      expect(under_test.array_field).to eq(["String Value"])
+      under_test.array_field_two = ["Array Value", "Stuff"]
+      expect(under_test.array_field_two).to eq(["Array Value", "Stuff"])
     end
   end
 
@@ -39,8 +40,20 @@ describe 'CodeHelpers' do
     end
 
     it 'should accept an Integer value' do
-      under_test.int_field = 99
-      expect(under_test.int_field).to eq(99)
+      under_test.int_field_two = 99
+      expect(under_test.int_field_two).to eq(99)
     end
   end
+
+  describe "int_range_accessor" do
+    it 'should reject a value outside the range' do
+      expect { under_test.int_range = 12 }.to raise_error(ArgumentError, /must be within the range/)
+    end
+
+    it 'should accept an Integer value within the range' do
+      under_test.int_range_two = 4
+      expect(under_test.int_range_two).to eq(4)
+    end
+  end
+
 end

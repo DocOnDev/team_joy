@@ -56,7 +56,7 @@ describe 'Git Commit Message Adapter' do
   context "commit message without score" do
     let(:commit_file) {SpecUtils::Resource.file("FailingMissing.txt")}
     it 'should fail' do
-      expect{ GitCommitMessageAdapter.message_from_file(commit_file) }.to raise_error(ArgumentError, /between 0 and 5/)
+      expect{ GitCommitMessageAdapter.message_from_file(commit_file) }.to raise_error(ArgumentError, /within the range 0 - 5/)
     end
   end
 end

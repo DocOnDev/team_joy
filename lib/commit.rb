@@ -3,6 +3,6 @@ require_relative 'author'
 
 class Commit < CodeHelpers::DataTypes
   string_accessor :id, :subject, :body, :branch_name, :files, :uri
-  int_accessor :score
+  int_range_accessor 0,5, :score
   type_accessor Author, :author
 end

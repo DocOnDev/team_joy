@@ -22,11 +22,11 @@ describe 'Commit Message' do
     end
 
     it 'should reject an Integer value less than 0' do
-      expect{ commitMessage.score = -1 }.to raise_error(ArgumentError, /between 0 and 5/)
+      expect{ commitMessage.score = -1 }.to raise_error(ArgumentError, /within the range 0 - 5/)
     end
 
     it 'should reject an Integer value greater than 5' do
-      expect{ commitMessage.score = 6 }.to raise_error(ArgumentError, /between 0 and 5/)
+      expect{ commitMessage.score = 6 }.to raise_error(ArgumentError, /within the range 0 - 5/)
     end
 
     it 'should accept an Integer value between 0 and 5' do
